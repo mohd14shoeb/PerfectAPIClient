@@ -8,10 +8,11 @@
 import PerfectCURL
 import Foundation
 
-/// Array Extension where Element is CURLRequest.Option Type
 extension Array where Element == CURLRequest.Option {
     
     /// Add HTTP Headers
+    ///
+    /// - Parameter headers: The HTTP headers
     public mutating func add(httpHeaders headers: [String: String]?) {
         // Unwrap headers parameter
         guard let headers = headers else {

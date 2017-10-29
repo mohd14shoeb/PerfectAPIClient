@@ -134,7 +134,7 @@ GithubAPIClient.zen.request { (result: APIClientResult<CURLResponse>) in
 Or even retrieve an `JSON` response as an automatically mapped object.
 
 ```swift
-GithubAPIClient.user(name: "sventiigi").request(mappedResponseType: User.self) { (result: APIClientResult<User>) in
+GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
     result.analysis(success: { (user: User) in
         // Do awesome stuff with the user
         print(user.name) // Sven Tiigi
@@ -175,14 +175,14 @@ extension User: Mappable {
 
 ## Advanced Usage
 
-### Modify Response
-By overriding the `modifyResponse` function you can update the response before it's being passed to the completion closure or JSON mapping will be performed. It's handy when the response JSON is wrapped inside a `result` property.
+### Modify JSON before Mapping
+By overriding the `modify` function you can update the response JSON before it's being mapped from JSON to your mappable type. It's handy when the response JSON is wrapped inside a `result` property.
 
 ```swift
-public func modifyResponse(payload: [String : Any]) -> [String : Any] {
+public func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> [String: Any] {
     // Try to retrieve JSON inside result property
-    guard let resultJSON = payload["result"] as? [String: Any] else {
-        return payload
+    guard let resultJSON = responseJSON["result"] as? [String: Any] else {
+        return responseJSON
     }
     return resultJSON
 }

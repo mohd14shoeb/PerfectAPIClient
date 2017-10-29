@@ -5,32 +5,38 @@
 //  Created by Sven Tiigi on 28.10.17.
 //
 
-/**
-     APIClientResult enumeration represents
-     the success failure case for an API response.
-     The success case is defined by a generic.
-     The failure case is defined by an error.
- */
+/// APIClientResult enumeration represents the result of an APIClient request
+///
+/// - success: The success case
+/// - failure: The failure case
 public enum APIClientResult<Value> {
     
-    /// Success
+    /// Success with generic as associated value
     case success(Value)
     
-    /// Failure
+    /// Failure with error as associated value
     case failure(Error)
     
-    /// Analysis result with given closures
+    /// Perform result analysis with success and failure closure
+    ///
+    /// - Parameters:
+    ///   - success: The success closure
+    ///   - failure: The failure closure
     public func analysis(success: ((Value) -> Void)?, failure: ((Error) -> Void)?) {
-        // Switch self
+        // Switch on self
         switch self {
         case .success(let value):
-            // Success verify closure
-            guard let success = success else { return }
+            // Unwrap success closure
+            guard let success = success else {
+                return
+            }
             // Invoke closure with success value
             success(value)
         case .failure(let error):
-            // Failure verify closure
-            guard let failure = failure else { return }
+            // Unwrap failure closure
+            guard let failure = failure else {
+                return
+            }
             // Invoke closure with error
             failure(error)
         }

@@ -46,7 +46,7 @@ class PerfectAPIClientTests: XCTestCase {
     
     func testGithubMappedUserRequest() {
         let expectation = self.expectation(description: #function)
-        GithubAPIClient.user(name: "sventiigi").request(mappedResponseType: User.self) { (result: APIClientResult<User>) in
+        GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
             result.analysis(success: { (user: User) in
                 XCTAssertNotNil(user.id)
                 XCTAssertNotNil(user.name)

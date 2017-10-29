@@ -14,10 +14,12 @@ import ObjectMapper
 
 public extension APIClient {
     
-    /// Request the API to retrieve Response
+    /// Request the API endpoint to retrieve CURLResponse
+    ///
+    /// - Parameter completion: completion closure with APIClientResult
     func request(completion: ((APIClientResult<CURLResponse>) -> Void)?) {
-        // Setup URL
-        let url = self.getURL()
+        // Get request URL
+        let url = self.getRequestURL()
         // Setup CURL Options with default options
         var options: [CURLRequest.Option] = [
             .httpMethod(self.method),
@@ -43,42 +45,47 @@ public extension APIClient {
         self.willPerformRequest(url: url, options: options)
         // Perform request
         CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
+            // Declare APIClientResult with CURLResponse
+            let result: APIClientResult<CURLResponse>
+            defer {
+                // Defer didRetrieveResponse invocation
+                self.didRetrieveResponse(url: url, options: options, result: result)
+            }
             do {
                 // Try to retrieve response
                 let response = try curlResponse()
-                // Invoke did retrieve response
-                self.didRetrieveResponse(url: url, options: options, result: .success(response))
-                // Check if a completion closure is supplied
-                guard let completion = completion else {
-                    return
-                }
-                // Invoke completion with response
-                completion(.success(response))
+                // Set result with success and response object
+                result = .success(response)
             } catch {
-                // Invoke did retrieve response
-                self.didRetrieveResponse(url: url, options: options, result: .failure(error))
-                // Check if a completion closure is supplied
-                guard let completion = completion else {
-                    return
-                }
-                // Error occured complete with failure
-                completion(.failure(error))
+                // Set result with failure and error object
+                result = .failure(error)
             }
+            // Unwrap completion clousre
+            guard let completion = completion else {
+                // No completion closure return out of function
+                return
+            }
+            // Invoke completion with result
+            completion(result)
         }
     }
     
-    /// Request the API with associated response type
-    func request<T: BaseMappable>(mappedResponseType: T.Type, completion: @escaping (APIClientResult<T>) -> Void) {
+    /// Request the API endpoint to retrieve response as mappable object
+    ///
+    /// - Parameters:
+    ///   - mappable: The mappable object type
+    ///   - completion: The completion closure with APIClientresult
+    func request<T: BaseMappable>(mappable: T.Type, completion: @escaping (APIClientResult<T>) -> Void) {
         // Perform request to retrieve response
         self.request { (result: APIClientResult<CURLResponse>) in
             // Analysis request result
             result.analysis(success: { (response: CURLResponse) in
                 // Retrieve body json
-                let json = self.modifyResponse(payload: response.bodyJSON)
+                let json = self.modify(responseJSON: response.bodyJSON, mappable: mappable)
                 // Try to map response via mapped response type
-                guard let mappedResponse = mappedResponseType.init(JSON: json) else {
+                guard let mappedResponse = mappable.init(JSON: json) else {
                     // Unable to map response
-                    let error = MapError(key: nil, currentValue: nil, reason: "Unable to map response with type: \(mappedResponseType)")
+                    let error = MapError(key: nil, currentValue: nil, reason: "Unable to map response with type: \(mappable)")
                     completion(.failure(error))
                     // Return out of function
                     return
@@ -92,15 +99,29 @@ public extension APIClient {
         }
     }
     
-    /// Modify Response Paylod
-    func modifyResponse(payload: [String: Any]) -> [String: Any] {
-        return payload
+    /// Modify response payload for mappable
+    ///
+    /// - Parameters:
+    ///   - responseJSON: The response JSON
+    ///   - mappable: The mappable object type that should be mapped to
+    /// - Returns: The updated response JSON as Dictionary
+    func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> [String: Any] {
+        return responseJSON
     }
     
-    /// Will perform request for url and request options
+    /// Will perform request to API endpoint
+    ///
+    /// - Parameters:
+    ///   - url: The request url
+    ///   - options: The supplied request options
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {}
     
-    /// Did retrieve response for url, request options and api response result
+    /// Did retrieve response after request has initiated
+    ///
+    /// - Parameters:
+    ///   - url: The request url
+    ///   - options: The supplied request options
+    ///   - result: The APIClientResult
     func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {}
     
 }
@@ -109,8 +130,10 @@ public extension APIClient {
 
 fileprivate extension APIClient {
     
-    /// Retrieve the URL by validating Slashes
-    func getURL() -> String {
+    /// Get request URL by concatenating baseURL and current path with validation
+    ///
+    /// - Returns: The request URL
+    func getRequestURL() -> String {
         // Initialize baseUrl
         var baseUrl = self.baseURL
         // Initialize path
