@@ -172,6 +172,39 @@ extension User: Mappable {
 }
 ```
 
+## Advanced Usage
+
+### Modify Response
+By overriding the `modifyResponse` function you can update the response before it's being passed to the completion closure or JSON mapping will be performed. It's handy when the response JSON is wrapped inside a `result` property.
+
+```swift
+public func modifyResponse(payload: [String : Any]) -> [String : Any] {
+	// Try to retrieve JSON inside result property
+	guard let resultJSON = payload["result"] as? [String: Any] else {
+		return payload
+	}
+	return resultJSON
+}
+```
+
+### Will Perform Request
+By overriding the `willPerformRequest` function you can perform logging operation or something else your might want to do, before the request of an `APIClient` will be executed.
+
+```swift
+func willPerformRequest(url: String, options: [CURLRequest.Option]) {
+	print("Github API Client will perform request \(url) with options: \(options)")
+}
+```
+
+### Did Retrieve Response
+By overriding the `didRetrieveResponse` function you can perform logging operation or something else your might want to do, after the response of an request for an `APIClient` is being retrieved.
+
+```swift
+func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
+	print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
+}
+```
+
 ## Linux Build Notes
 Ensure that you have installed libcurl.
 
