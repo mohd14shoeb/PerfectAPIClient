@@ -18,7 +18,7 @@ public extension APIClient {
     ///
     /// - Parameter completion: completion closure with APIClientResult
     func request(completion: ((APIClientResult<CURLResponse>) -> Void)?) {
-        // Get request URL
+        // Get URL
         let url = self.getRequestURL()
         // Setup CURL Options with default options
         var options: [CURLRequest.Option] = [
