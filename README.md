@@ -215,6 +215,7 @@ Ensure that you have installed libcurl.
 ```
 sudo apt-get install libcurl4-openssl-dev
 ```
+If you run into problems with JSON mapping Int and Double values using the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library under Linux, please see this [issue](https://github.com/Hearst-DD/ObjectMapper/issues/884).
 
 ## Dependencies
 PerfectAPIClient is using the following dependencies:
