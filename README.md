@@ -35,7 +35,8 @@ let package = Package(
     products: [
         .library(
             name: "MyPackage",
-            targets: ["MyPackage"]),
+            targets: ["MyPackage"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/SvenTiigi/PerfectAPIClient.git", from: "1.0.0")
@@ -43,7 +44,8 @@ let package = Package(
     targets: [
         .target(
             name: "MyPackage",
-            dependencies: ["PerfectAPIClient"])
+            dependencies: ["PerfectAPIClient"]
+        )
     ]
 )
 ```
