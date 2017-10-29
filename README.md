@@ -4,7 +4,7 @@
 	<a href="https://developer.apple.com/swift/" target="_blank">
 		<img src="https://img.shields.io/badge/Swift-3.2-orange.svg" alt="Swift 3.2">
 	</a>
-	<img src="https://img.shields.io/badge/platform-OS%20X%20%7C%20Linux-orange.svg" alt="Platform">
+	<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux-orange.svg" alt="Platform">
 		<a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="MIT License">
 	</a>
