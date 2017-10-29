@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/master/Assets/logo.png" width="75%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/master/Assets/logo.png" width="60%"></p>
 
 <p align="center">
 	<a href="https://developer.apple.com/swift/" target="_blank">
