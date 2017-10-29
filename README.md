@@ -36,7 +36,7 @@ let package = Package(
         .library(
             name: "MyPackage",
             targets: ["MyPackage"]
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/SvenTiigi/PerfectAPIClient.git", from: "1.0.0")
