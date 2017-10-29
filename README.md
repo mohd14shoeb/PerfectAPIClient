@@ -18,7 +18,7 @@ PerfectAPIClient is a network abstraction layer to perform network requests via 
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/SvenTiigi/PerfectAPIClient.git", .from: "1.0.0")
+.package(url: "https://github.com/SvenTiigi/PerfectAPIClient.git", from: "1.0.0")
 ```
 Here's an example `PackageDescription`:
 
