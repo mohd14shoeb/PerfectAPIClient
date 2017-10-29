@@ -121,12 +121,12 @@ PerfectAPIClient enables an easy way to access an API like this:
 
 ```swift
 GithubAPIClient.zen.request { (result: APIClientResult<CURLResponse>) in
-	result.analysis(success: { (response: CURLResponse) in
-		// Do awesome stuff with the response
-		print(response.bodyString) // Some zen
-	}, failure: { (error: Error) in
-		// Oh boy you are in trouble
-	}
+    result.analysis(success: { (response: CURLResponse) in
+        // Do awesome stuff with the response
+        print(response.bodyString) // Some zen
+    }, failure: { (error: Error) in
+        // Oh boy you are in trouble
+    }
 }
 ```
 
@@ -134,12 +134,12 @@ Or even retrieve an `JSON` response as an automatically mapped object.
 
 ```swift
 GithubAPIClient.user(name: "sventiigi").request(mappedResponseType: User.self) { (result: APIClientResult<User>) in
-	result.analysis(success: { (user: User) in
-		// Do awesome stuff with the user
-		print(user.name) // Sven Tiigi
-	}, failure: { (error: Error) in
-		// Oh boy you are in trouble again
-	}
+    result.analysis(success: { (user: User) in
+        // Do awesome stuff with the user
+        print(user.name) // Sven Tiigi
+    }, failure: { (error: Error) in
+        // Oh boy you are in trouble again
+    }
 }
 ```
 
@@ -179,11 +179,11 @@ By overriding the `modifyResponse` function you can update the response before i
 
 ```swift
 public func modifyResponse(payload: [String : Any]) -> [String : Any] {
-	// Try to retrieve JSON inside result property
-	guard let resultJSON = payload["result"] as? [String: Any] else {
-		return payload
-	}
-	return resultJSON
+    // Try to retrieve JSON inside result property
+    guard let resultJSON = payload["result"] as? [String: Any] else {
+        return payload
+    }
+    return resultJSON
 }
 ```
 
@@ -192,7 +192,7 @@ By overriding the `willPerformRequest` function you can perform logging operatio
 
 ```swift
 func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-	print("Github API Client will perform request \(url) with options: \(options)")
+    print("Github API Client will perform request \(url) with options: \(options)")
 }
 ```
 
@@ -201,7 +201,7 @@ By overriding the `didRetrieveResponse` function you can perform logging operati
 
 ```swift
 func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
-	print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
+    print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
 }
 ```
 
