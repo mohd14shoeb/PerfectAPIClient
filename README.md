@@ -193,7 +193,7 @@ By overriding the `willPerformRequest` function you can perform logging operatio
 
 ```swift
 func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-    print("Github API Client will perform request \(url) with options: \(options)")
+    print("Will perform request \(url) with options: \(options)")
 }
 ```
 
@@ -202,7 +202,7 @@ By overriding the `didRetrieveResponse` function you can perform logging operati
 
 ```swift
 func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
-    print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
+    print("Did retrieve response for request \(url) with options: \(options) and result: \(result)")
 }
 ```
 
