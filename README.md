@@ -5,8 +5,14 @@
 		<img src="https://img.shields.io/badge/Swift-3.2-orange.svg" alt="Swift 3.2">
 	</a>
 	<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux-orange.svg" alt="Platform">
-		<a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/LICENSE" target="_blank">
+	<a href="https://swift.org/package-manager/" target="_blank">
+		<img src="https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg">
+	</a>
+	<a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="MIT License">
+	</a>
+	<a href="https://twitter.com/SvenTiigi" target="_blank">
+		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
 </p>
 
@@ -219,6 +225,9 @@ PerfectAPIClient is using the following dependencies:
 * [Perfect-HTTP](https://github.com/PerfectlySoft/Perfect-HTTP)
 * [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL)
 * [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper)
+
+## Contributing
+Contributions are very welcome 🙌 🤓
 
 ## License
 
