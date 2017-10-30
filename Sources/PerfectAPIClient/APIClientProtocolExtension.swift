@@ -43,30 +43,41 @@ public extension APIClient {
         options.add(httpHeaders: self.headers)
         // Invoke will perform request
         self.willPerformRequest(url: url, options: options)
-        // Perform request
-        CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
-            // Declare APIClientResult with CURLResponse
-            let result: APIClientResult<CURLResponse>
-            defer {
-                // Defer didRetrieveResponse invocation
-                self.didRetrieveResponse(url: url, options: options, result: result)
-            }
-            do {
-                // Try to retrieve response
-                let response = try curlResponse()
-                // Set result with success and response object
-                result = .success(response)
-            } catch {
-                // Set result with failure and error object
-                result = .failure(error)
-            }
-            // Unwrap completion clousre
-            guard let completion = completion else {
-                // No completion closure return out of function
+        // Check if running unit tests
+        if ProcessInfo.isRunningTests {
+            // Unwrap mockResponseResult and completion closure
+            guard let mockResponseResult = self.mockResponseResult, let completion = completion else {
+                // mockResponseResult or competion are nil
                 return
             }
-            // Invoke completion with result
-            completion(result)
+            // Invoke completion with mockResponseResult
+            completion(mockResponseResult)
+        } else {
+            // Perform network request
+            CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
+                // Declare APIClientResult with CURLResponse
+                let result: APIClientResult<CURLResponse>
+                defer {
+                    // Defer didRetrieveResponse invocation
+                    self.didRetrieveResponse(url: url, options: options, result: result)
+                }
+                do {
+                    // Try to retrieve response
+                    let response = try curlResponse()
+                    // Set result with success and response object
+                    result = .success(response)
+                } catch {
+                    // Set result with failure and error object
+                    result = .failure(error)
+                }
+                // Unwrap completion clousre
+                guard let completion = completion else {
+                    // No completion closure return out of function
+                    return
+                }
+                // Invoke completion with result
+                completion(result)
+            }
         }
     }
     

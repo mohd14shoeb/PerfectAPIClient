@@ -33,6 +33,9 @@ public protocol APIClient {
     /// The additional request options
     var options: [CURLRequest.Option]? { get }
     
+    /// The mock response result for unit testing
+    var mockResponseResult: APIClientResult<CURLResponse>? { get }
+    
     /// Request the API endpoint to retrieve CURLResponse
     ///
     /// - Parameter completion: completion closure with APIClientResult

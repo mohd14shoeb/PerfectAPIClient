@@ -63,6 +63,10 @@ extension GithubAPIClient: APIClient {
         return nil
     }
     
+    var mockResponseResult: APIClientResult<CURLResponse>? {
+        return nil
+    }
+    
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {
         print("Github API Client will perform request \(url) with options: \(options)")
     }

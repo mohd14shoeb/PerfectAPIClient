@@ -69,6 +69,10 @@ extension JSONPlaceholderAPIClient: APIClient {
         // No further options needed
         return nil
     }
+    
+    var mockResponseResult: APIClientResult<CURLResponse>? {
+        return nil
+    }
 
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {
         print("JSONPlaceholder API Client will perform request \(url) with options: \(options)")
