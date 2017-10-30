@@ -267,7 +267,7 @@ var path: String {
     return "users"
 }
 ```
-Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry if you don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌.
+Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function to your needs 👌.
 
 ## Linux Build Notes
 Ensure that you have installed `libcurl`.
