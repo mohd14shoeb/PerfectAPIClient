@@ -14,10 +14,32 @@ import ObjectMapper
 
 public extension APIClient {
     
+    /// Get request URL by concatenating baseURL and current path
+    ///
+    /// - Returns: The request URL
+    func getRequestURL() -> String {
+        // Initialize baseUrl
+        var baseUrl = self.baseURL
+        // Initialize path
+        var path = self.path
+        // Check if baseUrl last character is not slash
+        if baseUrl.last != "/" {
+            // Add a slash
+            baseUrl += "/"
+        }
+        // Check if first character is slash
+        if path.first == "/" {
+            // Chop first character
+            path = path.substring(from: path.index(path.startIndex, offsetBy: 1))
+        }
+        // Return url
+        return baseUrl + path
+    }
+    
     /// Request the API endpoint to retrieve CURLResponse
     ///
     /// - Parameter completion: completion closure with APIClientResult
-    func request(completion: ((APIClientResult<CURLResponse>) -> Void)?) {
+    func request(completion: ((APIClientResult<APIClientResponse>) -> Void)?) {
         // Get URL
         let url = self.getRequestURL()
         // Setup CURL Options with default options
@@ -43,11 +65,11 @@ public extension APIClient {
         options.add(httpHeaders: self.headers)
         // Invoke will perform request
         self.willPerformRequest(url: url, options: options)
-        // Check if running unit tests
-        if ProcessInfo.isRunningTests {
-            // Unwrap mockResponseResult and completion closure
-            guard let mockResponseResult = self.mockResponseResult, let completion = completion else {
-                // mockResponseResult or competion are nil
+        // Check if a mockResponseResult is available and Unit Tests are running
+        if let mockResponseResult = self.mockResponseResult, ProcessInfo.isRunningTests {
+            // Unwrap completion closure
+            guard let completion = completion else {
+                // No completion closure available return out of function
                 return
             }
             // Invoke completion with mockResponseResult
@@ -56,7 +78,7 @@ public extension APIClient {
             // Perform network request
             CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
                 // Declare APIClientResult with CURLResponse
-                let result: APIClientResult<CURLResponse>
+                let result: APIClientResult<APIClientResponse>
                 defer {
                     // Defer didRetrieveResponse invocation
                     self.didRetrieveResponse(url: url, options: options, result: result)
@@ -65,7 +87,7 @@ public extension APIClient {
                     // Try to retrieve response
                     let response = try curlResponse()
                     // Set result with success and response object
-                    result = .success(response)
+                    result = .success(APIClientResponse(curlResponse: response))
                 } catch {
                     // Set result with failure and error object
                     result = .failure(error)
@@ -88,16 +110,22 @@ public extension APIClient {
     ///   - completion: The completion closure with APIClientresult
     func request<T: BaseMappable>(mappable: T.Type, completion: @escaping (APIClientResult<T>) -> Void) {
         // Perform request to retrieve response
-        self.request { (result: APIClientResult<CURLResponse>) in
+        self.request { (result: APIClientResult<APIClientResponse>) in
             // Analysis request result
-            result.analysis(success: { (response: CURLResponse) in
-                // Retrieve body json
-                let json = self.modify(responseJSON: response.bodyJSON, mappable: mappable)
+            result.analysis(success: { (response: APIClientResponse) in
+                // Unwrap payload JSON
+                guard var json = response.getPayloadJSON() else {
+                    // Payload isn't a valid JSON
+                    completion(.failure("Response payload isn't a valid JSON"))
+                    // Return out of function
+                    return
+                }
+                // Invoke modify responseJSON
+                json = self.modify(responseJSON: json, mappable: mappable)
                 // Try to map response via mapped response type
-                guard let mappedResponse = mappable.init(JSON: json) else {
+                guard let mappedResponse = response.getMappablePayload(type: mappable, customPayload: json) else {
                     // Unable to map response
-                    let error = MapError(key: nil, currentValue: nil, reason: "Unable to map response with type: \(mappable)")
-                    completion(.failure(error))
+                    completion(.failure("Unable to map response with type: \(mappable)"))
                     // Return out of function
                     return
                 }
@@ -133,34 +161,6 @@ public extension APIClient {
     ///   - url: The request url
     ///   - options: The supplied request options
     ///   - result: The APIClientResult
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {}
-    
-}
-
-// MARK: Private helper functions
-
-fileprivate extension APIClient {
-    
-    /// Get request URL by concatenating baseURL and current path with validation
-    ///
-    /// - Returns: The request URL
-    func getRequestURL() -> String {
-        // Initialize baseUrl
-        var baseUrl = self.baseURL
-        // Initialize path
-        var path = self.path
-        // Check if baseUrl last character is not slash
-        if baseUrl.last != "/" {
-            // Add a slash
-            baseUrl += "/"
-        }
-        // Check if first character is slash
-        if path.first == "/" {
-            // Chop first character
-            path = path.substring(from: path.index(path.startIndex, offsetBy: 1))
-        }
-        // Return url
-        return baseUrl + path
-    }
+    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {}
     
 }

@@ -63,15 +63,21 @@ extension GithubAPIClient: APIClient {
         return nil
     }
     
-    var mockResponseResult: APIClientResult<CURLResponse>? {
-        return nil
+    var mockResponseResult: APIClientResult<APIClientResponse>? {
+        switch self {
+        case .zen:
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
+            return .success(response)
+        default:
+            return nil
+        }
     }
     
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {
         print("Github API Client will perform request \(url) with options: \(options)")
     }
     
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
+    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
         print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
     }
     

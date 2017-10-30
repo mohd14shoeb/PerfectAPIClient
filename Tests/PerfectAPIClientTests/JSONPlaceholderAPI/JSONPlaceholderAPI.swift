@@ -15,7 +15,7 @@ enum JSONPlaceholderAPIClient {
     /// Create a post
     case createPost(Post)
     /// An unavailable endpoint
-    case invalidEndpoint
+    case mockedEndpoint
 }
 
 // MARK: APIClient
@@ -30,7 +30,7 @@ extension JSONPlaceholderAPIClient: APIClient {
         switch self {
         case .createPost:
             return "/posts"
-        case .invalidEndpoint:
+        case .mockedEndpoint:
             return "invalidEndpoint"
         }
     }
@@ -39,7 +39,7 @@ extension JSONPlaceholderAPIClient: APIClient {
         switch self {
         case .createPost:
             return .post
-        case .invalidEndpoint:
+        case .mockedEndpoint:
             return .get
         }
     }
@@ -70,15 +70,24 @@ extension JSONPlaceholderAPIClient: APIClient {
         return nil
     }
     
-    var mockResponseResult: APIClientResult<CURLResponse>? {
-        return nil
+    var mockResponseResult: APIClientResult<APIClientResponse>? {
+        switch self {
+        case .mockedEndpoint:
+            guard let postJSON = Post(id: 42, userId: 43, title: "I'm a mocked Post", body: "Just for unit tests").toJSONString() else {
+                return .failure("Unable to construct mocked Post JSON for unit tests")
+            }
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: postJSON, headers: ["UnitTest": "Rocks with PerfectAPIClient"])
+            return .success(response)
+        default:
+            return nil
+        }
     }
 
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {
         print("JSONPlaceholder API Client will perform request \(url) with options: \(options)")
     }
     
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
+    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
         print("JSONPlaceholder API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
     }
     

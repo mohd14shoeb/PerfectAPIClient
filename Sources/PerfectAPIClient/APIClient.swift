@@ -34,12 +34,17 @@ public protocol APIClient {
     var options: [CURLRequest.Option]? { get }
     
     /// The mock response result for unit testing
-    var mockResponseResult: APIClientResult<CURLResponse>? { get }
+    var mockResponseResult: APIClientResult<APIClientResponse>? { get }
+    
+    /// Get request URL by concatenating baseURL and current path
+    ///
+    /// - Returns: The request URL
+    func getRequestURL() -> String
     
     /// Request the API endpoint to retrieve CURLResponse
     ///
-    /// - Parameter completion: completion closure with APIClientResult
-    func request(completion: ((APIClientResult<CURLResponse>) -> Void)?)
+    /// - Parameter completion: completion closure with APIClientResponse
+    func request(completion: ((APIClientResult<APIClientResponse>) -> Void)?)
     
     /// Request the API endpoint to retrieve response as mappable object
     ///
@@ -69,6 +74,6 @@ public protocol APIClient {
     ///   - url: The request url
     ///   - options: The supplied request options
     ///   - result: The APIClientResult
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>)
+    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>)
     
 }
