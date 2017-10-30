@@ -41,6 +41,11 @@ public protocol APIClient {
     /// - Returns: The request URL
     func getRequestURL() -> String
     
+    /// Modify the request url that is used to perform the API request
+    ///
+    /// - Parameter requestURL: The request url
+    func modify(requestURL: inout String)
+    
     /// Request the API endpoint to retrieve CURLResponse
     ///
     /// - Parameter completion: completion closure with APIClientResponse
@@ -58,8 +63,7 @@ public protocol APIClient {
     /// - Parameters:
     ///   - responseJSON: The response JSON
     ///   - mappable: The mappable object type that should be mapped to
-    /// - Returns: The updated response JSON as Dictionary
-    func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> [String: Any]
+    func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type)
     
     /// Will perform request to API endpoint
     ///

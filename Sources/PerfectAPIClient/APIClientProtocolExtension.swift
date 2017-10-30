@@ -36,6 +36,11 @@ public extension APIClient {
         return baseUrl + path
     }
     
+    /// Modify the request url that is used to perform the API request
+    ///
+    /// - Parameter requestURL: The request url
+    func modify(requestURL: inout String) {}
+    
     /// Request the API endpoint to retrieve CURLResponse
     ///
     /// - Parameter completion: completion closure with APIClientResult
@@ -121,7 +126,7 @@ public extension APIClient {
                     return
                 }
                 // Invoke modify responseJSON
-                json = self.modify(responseJSON: json, mappable: mappable)
+                self.modify(responseJSON: &json, mappable: mappable)
                 // Try to map response via mapped response type
                 guard let mappedResponse = response.getMappablePayload(type: mappable, customPayload: json) else {
                     // Unable to map response
@@ -143,10 +148,7 @@ public extension APIClient {
     /// - Parameters:
     ///   - responseJSON: The response JSON
     ///   - mappable: The mappable object type that should be mapped to
-    /// - Returns: The updated response JSON as Dictionary
-    func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> [String: Any] {
-        return responseJSON
-    }
+    func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type) {}
     
     /// Will perform request to API endpoint
     ///
