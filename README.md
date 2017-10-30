@@ -210,11 +210,8 @@ By overriding the `modify(responseJSON ...)` function you can update the respons
 
 ```swift
 public func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type) {
-    // Try to retrieve JSON inside result property
-    guard let resultJSON = responseJSON["result"] as? [String: Any] else {
-        return responseJSON
-    }
-    return resultJSON
+    // Try to retrieve JSON from result property
+    responseJSON = responseJSON["result"] as? [String: Any] ?? responseJSON
 }
 ```
 
