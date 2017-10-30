@@ -241,13 +241,13 @@ In order to add mocking to your APIClient for unit testing your application you 
 
 ```swift
 var mockResponseResult: APIClientResult<APIClientResponse>? {
-	switch self {
-		case .zen:
-		    let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.")
-		    return .success(response)
-		default:
-		    return nil
-	}
+    switch self {
+    case .zen:
+        let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.")
+        return .success(response)
+    default:
+        return nil
+    }
 }
 ```
 
@@ -259,12 +259,12 @@ This is the recommended way:
 ```swift
 /// The base url
 var baseURL: String {
-	return "https://api.awesome.com/"
+    return "https://api.awesome.com/"
 }
     
 /// The path for a specific endpoint
 var path: String {
-	return "users"
+    return "users"
 }
 ```
 Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry if you don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌.
