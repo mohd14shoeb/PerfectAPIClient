@@ -118,6 +118,17 @@ extension GithubAPIClient: APIClient {
         return nil
     }
     
+    /// The mock response result for unit tests
+    var mockResponseResult: APIClientResult<APIClientResponse>? {
+        switch self {
+        case .zen:
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
+            return .success(response)
+        default:
+            return nil
+        }
+    }
+    
 }
 ```
 There is also an [JSONPlaceholderAPIClient](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/JSONPlaceholderAPI/JSONPlaceholderAPI.swift) example available.
@@ -126,17 +137,22 @@ There is also an [JSONPlaceholderAPIClient](https://github.com/SvenTiigi/Perfect
 PerfectAPIClient enables an easy way to access an API like this:
 
 ```swift
-GithubAPIClient.zen.request { (result: APIClientResult<CURLResponse>) in
-    result.analysis(success: { (response: CURLResponse) in
+GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
+    result.analysis(success: { (response: APIClientResponse) in
         // Do awesome stuff with the response
-        print(response.bodyString) // Some zen
+        print(response.url) // The request url
+        print(response.status) // The response HTTP status
+        print(response.payload) // The response payload
+        print(response.getHTTPHeader(field: "Content-Type")) // HTTP header field
+        print(response.getPayloadJSON) // The payload as JSON/Dictionary
+        print(response.getMappablePayload(type: SomethingMappable.self)) // Map payload into an object
     }, failure: { (error: Error) in
-        // Oh boy you are in trouble
+        // Oh boy you are in trouble 😨
     }
 }
 ```
 
-Or even retrieve an `JSON` response as an automatically mapped object.
+Or even retrieve an `JSON` response as an automatically `Mappable` object.
 
 ```swift
 GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
@@ -144,12 +160,12 @@ GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: 
         // Do awesome stuff with the user
         print(user.name) // Sven Tiigi
     }, failure: { (error: Error) in
-        // Oh boy you are in trouble again
+        // Oh boy you are in trouble again 😱
     }
 }
 ```
 
-The user object implements the `Mappable` protocol based on the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library to perform the mapping between your classes/structs and `JSON`.
+The user object in this example implements the `Mappable` protocol based on the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library to perform the mapping between the struct/class and `JSON`.
 
 ```swift
 import ObjectMapper
@@ -180,11 +196,20 @@ extension User: Mappable {
 
 ## Advanced Usage
 
-### Modify JSON before Mapping
-By overriding the `modify` function you can update the response JSON before it's being mapped from JSON to your mappable type. It's handy when the response JSON is wrapped inside a `result` property.
+### Modify Request URL
+By overriding the `modify(requestURL ...)` function you can update the constructed request URL from baseURL and path. It's handy when you want to add a `Token` query parameter to your request url everytime instead of adding it to every path.
 
 ```swift
-public func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> [String: Any] {
+public func modify(requestURL: inout String) {
+    requestURL += "&token=42"
+}
+```
+
+### Modify JSON before Mapping
+By overriding the `modify(responseJSON ...)` function you can update the response JSON before it's being mapped from JSON to your mappable type. It's handy when the response JSON is wrapped inside a `result` property.
+
+```swift
+public func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type) {
     // Try to retrieve JSON inside result property
     guard let resultJSON = responseJSON["result"] as? [String: Any] else {
         return responseJSON
@@ -192,6 +217,9 @@ public func modify(responseJSON: [String: Any], mappable: BaseMappable.Type) -> 
     return resultJSON
 }
 ```
+
+## Logging
+By overrding the following two functions you cab add logging to your request before the request started and when a response is retrieved or something else you might want to do.
 
 ### Will Perform Request
 By overriding the `willPerformRequest` function you can perform logging operation or something else your might want to do, before the request of an `APIClient` will be executed.
@@ -211,13 +239,46 @@ func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: API
 }
 ```
 
+## Mocking (Unit-Tests)
+In order to add mocking to your APIClient for unit testing your application you can return an `APIClientResult` via the `mockResponseResult` protocol variable. The `mockResponseResult` is only used when you return an `APIClientResult` and the current runtime is under `XCTest`.
+
+```swift
+var mockResponseResult: APIClientResult<APIClientResponse>? {
+	switch self {
+		case .zen:
+		    let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.")
+		    return .success(response)
+		default:
+		    return nil
+	}
+}
+```
+
+## Slashes
+When your ask yourself where to put the slash `/` when returning a String for `baseURL` and `path` 🤔
+
+This is the recommended way:
+
+```swift
+/// The base url
+var baseURL: String {
+	return "https://api.awesome.com/"
+}
+    
+/// The path for a specific endpoint
+var path: String {
+	return "users"
+}
+```
+Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry if you don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌.
+
 ## Linux Build Notes
-Ensure that you have installed libcurl.
+Ensure that you have installed `libcurl`.
 
 ```
 sudo apt-get install libcurl4-openssl-dev
 ```
-If you run into problems with JSON mapping Int and Double values using the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library under Linux, please see this [issue](https://github.com/Hearst-DD/ObjectMapper/issues/884).
+If you run into problems with `JSON-Mapping` on `Int` and `Double` values using the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library under Linux, please see this [issue](https://github.com/Hearst-DD/ObjectMapper/issues/884).
 
 ## Dependencies
 PerfectAPIClient is using the following dependencies:
