@@ -79,6 +79,36 @@ extension GithubAPIClient: APIClient {
     
     func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
         print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
+        print(GithubAPIClient.user)
+    }
+    
+}
+
+// MARK: RawRepresentable
+
+extension GithubAPIClient: RawRepresentable {
+    
+    /// Associated type RawValue as String
+    typealias RawValue = String
+    
+    /// RawRepresentable initializer. Which always returns nil
+    ///
+    /// - Parameters:
+    ///   - rawValue: The rawValue
+    init?(rawValue: String) {
+        // Returning nil to avoid constructing enum with String
+        return nil
+    }
+    
+    /// The enumeration name as String
+    var rawValue: RawValue {
+        // Retrieve label via Mirror for Enum with associcated value
+        guard let label = Mirror(reflecting: self).children.first?.label else {
+            // Return String describing self enumeration with no asscoiated value
+            return String(describing: self)
+        }
+        // Return label
+        return label
     }
     
 }
