@@ -7,6 +7,7 @@
 
 import XCTest
 import PerfectCURL
+import SwiftEnv
 @testable import PerfectAPIClient
 
 class PerfectAPIClientTests: XCTestCase {
@@ -16,15 +17,20 @@ class PerfectAPIClientTests: XCTestCase {
     
     /// All tests
     static var allTests = [
-        ("testMockedGithubZenRequest", testMockedGithubZenRequest),
-        ("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
-        ("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
-        ("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest),
-        ("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
+        ("testSwiftEnvExtension", testSwiftEnvExtension)
+        //("testMockedGithubZenRequest", testMockedGithubZenRequest),
+        //("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
+        //("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
+        ("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest)
+        //("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
     ]
     
     override func setUp() {
         self.continueAfterFailure = false
+    }
+    
+    func testSwiftEnvExtension() {
+        XCTAssert(SwiftEnv.isRunningUnitTests)
     }
     
     func testMockedGithubZenRequest() {
