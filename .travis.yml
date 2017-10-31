@@ -12,3 +12,6 @@ before_install:
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -J 'PerfectAPIClient'
