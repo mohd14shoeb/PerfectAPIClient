@@ -1,0 +1,12 @@
+# PerfectAPIClient document generator jazzy settings
+
+copyright: Copyright 2017 Sven Tiigi
+author: Sven Tiigi
+module: PerfectAPIClient
+github_url: https://github.com/SvenTiigi/PerfectAPIClient
+xcodebuild_arguments: [-target, PerfectAPIClient]
+module: PerfectAPIClient
+clean: true
+theme: fullwidth
+output: ./Documentation
+min_acl: private
