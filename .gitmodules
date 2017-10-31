@@ -1,0 +1,4 @@
+[submodule "PerfectAPIClient"]
+	path = PerfectAPIClient
+	url = https://github.com/SvenTiigi/PerfectAPIClient.git
+	branch = master
