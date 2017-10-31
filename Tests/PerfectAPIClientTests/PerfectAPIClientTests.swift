@@ -20,7 +20,7 @@ class PerfectAPIClientTests: XCTestCase {
         ("testSwiftEnvExtension", testSwiftEnvExtension),
         ("testMockedGithubZenRequest", testMockedGithubZenRequest),
         ("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
-        ("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
+        //("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
         ("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest),
         ("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
     ]
