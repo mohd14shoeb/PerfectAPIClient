@@ -28,3 +28,6 @@ cd curl-7.50.2
 make
 sudo make install
 sudo ldconfig
+
+# Updated curl version
+curl --version
