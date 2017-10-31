@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="https://developer.apple.com/swift/" target="_blank">
-		<img src="https://img.shields.io/badge/Swift-3.2-orange.svg" alt="Swift 3.2">
+		<img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift 3.2">
 	</a>
 	<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux-yellow.svg" alt="Platform">
 	<a href="https://swift.org/package-manager/" target="_blank">
