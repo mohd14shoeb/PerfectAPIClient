@@ -26,7 +26,14 @@ class PerfectAPIClientTests: XCTestCase {
     ]
     
     override func setUp() {
+        super.setUp()
         self.continueAfterFailure = false
+        SwiftEnv()["XCTestConfigurationFilePath"] = "true"
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        SwiftEnv()["XCTestConfigurationFilePath"] = nil
     }
     
     func testSwiftEnvExtension() {
