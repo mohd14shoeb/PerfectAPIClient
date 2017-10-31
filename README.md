@@ -11,11 +11,11 @@
 	<a href="https://swift.org/package-manager/" target="_blank">
 		<img src="https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg">
 	</a>
-	<a href="https://twitter.com/SvenTiigi" target="_blank">
-		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
-	</a>
 	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
 		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
+	</a>
+	<a href="https://twitter.com/SvenTiigi" target="_blank">
+		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
 </p>
 
