@@ -16,6 +16,7 @@ matrix:
 
 before_install:
   - git clone https://github.com/IBM-Swift/Package-Builder.git
+  - chmod +x /.travis/install-dependencies.sh
 
 install:
   - ./.travis/install-dependencies.sh
