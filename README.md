@@ -270,13 +270,19 @@ var path: String {
 Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌.
 
 ## RawRepresentable
-As most of your enumeration cases will be mixed with [Associated Values](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID148) and some without, it's hard to retrieve the enumerations name as a String because you can't declare an Enumeration with associated values like this: `enum GithubAPIClient: String`.
+As most of your enumeration cases will be mixed with [Associated Values](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID148) and some without, it's hard to retrieve the enumerations name as a String because you can't declare an Enumeration with associated values like this: 
+
+``` swift
+enum GithubAPIClient: String { ... }
+```
 
 So here is an example to retrieve the enumeration name via the `rawValue` property from the `RawRepresentable` protocol:
 
 ```swift
 enum GithubAPIClient {
+    // Without associated value
     case zen
+    // With associated value
     case user(name: String)
 }
 
