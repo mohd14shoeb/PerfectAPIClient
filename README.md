@@ -254,7 +254,7 @@ var mockResponseResult: APIClientResult<APIClientResponse>? {
 ## Slashes
 When your ask yourself where to put the slash `/` when returning a String for `baseURL` and `path` 🤔
 
-This is the recommended way:
+This is the recommended way ☝️:
 
 ```swift
 /// The base url
