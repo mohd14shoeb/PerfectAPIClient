@@ -11,7 +11,11 @@
 	<a href="https://twitter.com/SvenTiigi" target="_blank">
 		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
+	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
+		<img src="https://img.shields.io/badge/Documentation-available-blue.svg" alt="Docs">
+	</a>
 </p>
+
 
 PerfectAPIClient is a network abstraction layer to perform network requests via [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL) from your [Perfect Server Side Swift](https://github.com/PerfectlySoft/Perfect) application. It's heavily inspired by [Moya](https://github.com/Moya/Moya) and easy and fun to use.
 
