@@ -269,6 +269,55 @@ var path: String {
 ```
 Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌.
 
+## RawRepresentable
+As most of your enumeration cases will be mixed with [Associated Values](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID148) and some without, it's hard to retrieve the enumerations name as a String because you can't declare an Enumeration with associated values like this: `enum GithubAPIClient: String`.
+
+So here is an example to retrieve the enumeration name via the `rawValue` property from the `RawRepresentable` protocol:
+
+```swift
+enum GithubAPIClient {
+    case zen
+    case user(name: String)
+}
+
+extension GithubAPIClient: RawRepresentable {
+    
+    /// Associated type RawValue as String
+    typealias RawValue = String
+    
+    /// RawRepresentable initializer. Which always returns nil
+    ///
+    /// - Parameters:
+    ///   - rawValue: The rawValue
+    init?(rawValue: String) {
+        // Returning nil to avoid constructing enum with String
+        return nil
+    }
+    
+    /// The enumeration name as String
+    var rawValue: RawValue {
+        // Retrieve label via Mirror for Enum with associcated value
+        guard let label = Mirror(reflecting: self).children.first?.label else {
+            // Return String describing self enumeration with no asscoiated value
+            return String(describing: self)
+        }
+        // Return label
+        return label
+    }
+    
+}
+```
+Full example [GithubAPIClient.swift](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift)
+
+#### Usage
+
+```swift
+print(GithubAPIClient.zen.rawValue) // zen
+print(GithubAPIClient.user(name: "sventiigi").rawValue) // user
+```
+
+Awesome 😎
+
 ## Linux Build Notes
 Ensure that you have installed `libcurl`.
 
