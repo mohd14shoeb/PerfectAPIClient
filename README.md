@@ -5,6 +5,9 @@
 		<img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift 3.2">
 	</a>
 	<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux-yellow.svg" alt="Platform">
+	<a href="https://travis-ci.org/SvenTiigi/PerfectAPIClient" target="_blank">
+		<img src="https://travis-ci.org/SvenTiigi/PerfectAPIClient.svg?branch=master" alt="TravisBuild">
+	</a>
 	<a href="https://swift.org/package-manager/" target="_blank">
 		<img src="https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg">
 	</a>
