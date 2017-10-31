@@ -175,8 +175,6 @@ The user object in this example implements the `Mappable` protocol based on the 
 import ObjectMapper
 
 struct User {
-    /// The identifier
-    var id: Int?
     /// The users full name
     var name: String?
     /// The user type
@@ -191,7 +189,6 @@ extension User: Mappable {
     
     /// Mapping
     mutating func mapping(map: Map) {
-        self.id     <- map["id"]
         self.name   <- map["name"]
         self.type   <- map["type"]
     }
@@ -220,7 +217,7 @@ public func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Typ
 ```
 
 ## Logging
-By overrding the following two functions you cab add logging to your request before the request started and when a response is retrieved or something else you might want to do.
+By overrding the following two functions you can add logging to your request before the request started and when a response is retrieved or something else you might want to do.
 
 ### Will Perform Request
 By overriding the `willPerformRequest` function you can perform logging operation or something else your might want to do, before the request of an `APIClient` will be executed.
