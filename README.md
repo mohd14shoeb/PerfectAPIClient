@@ -250,6 +250,7 @@ var mockResponseResult: APIClientResult<APIClientResponse>? {
     }
 }
 ```
+For more details checkout the [PerfectAPIClientTests.swift](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/PerfectAPIClientTests.swift) file.
 
 ## Slashes
 When your ask yourself where to put the slash `/` when returning a String for `baseURL` and `path` 🤔
