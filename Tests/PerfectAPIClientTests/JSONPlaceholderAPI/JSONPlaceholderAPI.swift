@@ -66,8 +66,12 @@ extension JSONPlaceholderAPIClient: APIClient {
     }
     
     var options: [CURLRequest.Option]? {
-        // No further options needed
-        return nil
+        switch self {
+        case .createPost:
+            return [.timeout(15)]
+        default:
+            return nil
+        }
     }
     
     var mockResponseResult: APIClientResult<APIClientResponse>? {
