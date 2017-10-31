@@ -17,7 +17,7 @@ class PerfectAPIClientTests: XCTestCase {
     
     /// All tests
     static var allTests = [
-        ("testSwiftEnvExtension", testSwiftEnvExtension)
+        ("testSwiftEnvExtension", testSwiftEnvExtension),
         //("testMockedGithubZenRequest", testMockedGithubZenRequest),
         //("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
         //("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
