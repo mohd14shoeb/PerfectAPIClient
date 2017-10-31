@@ -6,7 +6,6 @@
 //
 
 import PerfectCURL
-import Foundation
 
 extension Array where Element == CURLRequest.Option {
     
