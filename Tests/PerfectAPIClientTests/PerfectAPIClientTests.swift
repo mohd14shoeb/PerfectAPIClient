@@ -50,7 +50,7 @@ class PerfectAPIClientTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             })
         }
-        self.wait(for: [expectation], timeout: self.timeout)
+        self.waitForExpectations(timeout: self.timeout, handler: nil)
     }
     
     func testNetworkGithubZenRequestWithoutCompletion() {
@@ -69,7 +69,7 @@ class PerfectAPIClientTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             })
         }
-        self.wait(for: [expectation], timeout: self.timeout)
+        self.waitForExpectations(timeout: self.timeout, handler: nil)
     }
     
     func testNetworkJSONPlaceholderPostRequest() {
@@ -85,7 +85,7 @@ class PerfectAPIClientTests: XCTestCase {
                 expectation.fulfill()
             }, failure: nil)
         }
-        self.wait(for: [expectation], timeout: self.timeout)
+        self.waitForExpectations(timeout: self.timeout, handler: nil)
     }
     
     func testMockedJSONPlacerHolderEndpoint() {
@@ -109,7 +109,7 @@ class PerfectAPIClientTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             })
         }
-        self.wait(for: [expectation], timeout: self.timeout)
+        self.waitForExpectations(timeout: self.timeout, handler: nil)
     }
 
 }
