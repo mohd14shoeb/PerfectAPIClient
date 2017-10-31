@@ -78,7 +78,7 @@ extension JSONPlaceholderAPIClient: APIClient {
     var mockResponseResult: APIClientResult<APIClientResponse>? {
         switch self {
         case .mockedEndpoint:
-            guard let postJSON = Post(id: 42, userId: 43, title: "I'm a mocked Post", body: "Just for unit tests").toJSONString() else {
+            guard let postJSON = Post(title: "I'm a mocked Post", body: "Just for unit tests").toJSONString() else {
                 return .failure("Unable to construct mocked Post JSON for unit tests")
             }
             let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: postJSON, headers: ["UnitTest": "Rocks with PerfectAPIClient"])

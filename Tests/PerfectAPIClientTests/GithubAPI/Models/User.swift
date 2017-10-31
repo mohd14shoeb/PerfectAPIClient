@@ -8,8 +8,6 @@
 import ObjectMapper
 
 struct User {
-    /// The identifier
-    var id: Int?
     /// The users full name
     var name: String?
     /// The user type
@@ -25,7 +23,6 @@ extension User: Mappable {
     
     /// Mapping
     mutating func mapping(map: Map) {
-        self.id     <- map["id"]
         self.name   <- map["name"]
         self.type   <- map["type"]
     }

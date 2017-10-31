@@ -9,10 +9,6 @@ import ObjectMapper
 
 /// Post represents JSON object fetched from JSONPlaceholder API
 struct Post {
-    /// The identifier
-    var id: Int?
-    /// The user identifier
-    var userId: Int?
     /// The title
     var title: String?
     /// The body
@@ -28,8 +24,6 @@ extension Post: Mappable {
     
     /// Mapping
     mutating func mapping(map: Map) {
-        self.id         <- map["id"]
-        self.userId     <- map["userId"]
         self.title      <- map["title"]
         self.body       <- map["body"]
     }
@@ -50,9 +44,7 @@ extension Post: Equatable {
     ///   - rhs: Another value to compare.
     /// Equatable
     public static func == (lhs: Post, rhs: Post) -> Bool {
-        return lhs.id == rhs.id
-            && lhs.userId == rhs.userId
-            && lhs.title == rhs.title
+        return lhs.title == rhs.title
             && lhs.body == rhs.body
     }
     

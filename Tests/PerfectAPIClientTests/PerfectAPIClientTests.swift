@@ -61,7 +61,6 @@ class PerfectAPIClientTests: XCTestCase {
         let expectation = self.expectation(description: #function)
         GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
             result.analysis(success: { (user: User) in
-                XCTAssertNotNil(user.id)
                 XCTAssertNotNil(user.name)
                 XCTAssertNotNil(user.type)
                 expectation.fulfill()
@@ -75,8 +74,6 @@ class PerfectAPIClientTests: XCTestCase {
     func testNetworkJSONPlaceholderPostRequest() {
         let expectation = self.expectation(description: #function)
         var post = Post()
-        post.id = 42
-        post.userId = 7
         post.title = "Mr.Robot loves PerfectAPIClient"
         post.body = "Awesome body description"
         JSONPlaceholderAPIClient.createPost(post).request { (result: APIClientResult<APIClientResponse>) in
@@ -97,7 +94,6 @@ class PerfectAPIClientTests: XCTestCase {
                     XCTFail("Expected to retrieve Payload as Post object")
                     return
                 }
-                XCTAssertEqual(post.id, 42)
                 XCTAssertEqual(post.title, "I'm a mocked Post")
                 guard let unitTestHTTPHeader = response.getHTTPHeader(field: "UnitTest") else {
                     XCTFail("Expected to have a UnitTest HTTP header field")
