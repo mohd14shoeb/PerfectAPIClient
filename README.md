@@ -348,6 +348,12 @@ PerfectAPIClient is using the following dependencies:
 ## Contributing
 Contributions are very welcome 🙌 🤓
 
+## To-Do
+
+- [ ] Improve Unit-Tests
+- [ ] Improve Linux compatibility
+- [ ] Add Travis CI
+
 ## License
 
 ```
