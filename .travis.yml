@@ -15,10 +15,6 @@ matrix:
       sudo: required
 
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libssl-dev
-  - sudo apt-get install -y openssl
-  - sudo apt-get install -y libcurl4-openssl-dev
   - git clone https://github.com/IBM-Swift/Package-Builder.git
 
 script:
