@@ -17,21 +17,16 @@ class PerfectAPIClientTests: XCTestCase {
     
     /// All tests
     static var allTests = [
-        ("testExample", testExample)
-        //("testSwiftEnvExtension", testSwiftEnvExtension),
-        //("testMockedGithubZenRequest", testMockedGithubZenRequest),
-        //("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
-        //("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
-        //("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest)
-        //("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
+        ("testSwiftEnvExtension", testSwiftEnvExtension),
+        ("testMockedGithubZenRequest", testMockedGithubZenRequest),
+        ("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
+        ("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
+        ("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest),
+        ("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
     ]
     
     override func setUp() {
         self.continueAfterFailure = false
-    }
-    
-    func testExample() {
-        
     }
     
     func testSwiftEnvExtension() {
