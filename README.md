@@ -357,6 +357,7 @@ Contributions are very welcome 🙌 🤓
 - [ ] Improve Unit-Tests
 - [ ] Improve Linux compatibility
 - [ ] Add Travis CI
+- [ ] Add automated Jazzy documentation generation via Travis CI
 
 ## License
 
