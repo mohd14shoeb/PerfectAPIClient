@@ -68,6 +68,7 @@ extension JSONPlaceholderAPIClient: APIClient {
     var options: [CURLRequest.Option]? {
         switch self {
         case .createPost:
+            // Return custom timeout
             return [.timeout(15)]
         default:
             return nil
