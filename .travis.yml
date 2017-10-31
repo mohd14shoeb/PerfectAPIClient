@@ -17,12 +17,8 @@ matrix:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libssl-dev
-  - sudo apt-get install -y openssl
   - sudo apt-get install -y libcurl4-openssl-dev
   - git clone https://github.com/IBM-Swift/Package-Builder.git
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -J 'PerfectAPIClient'
