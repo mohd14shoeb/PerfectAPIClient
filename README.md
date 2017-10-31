@@ -51,7 +51,7 @@ let package = Package(
 ```
 
 ## Setup
-In order to define the network abstraction layer with PerfectAPIClient, an enumeration will be declared to access the API endpoints. In this example we declare a `GithubAPIClient` to retrieve some Github [zen](https://api.github.com/zen) and [user information](https://api.github.com/users/sventiigi). The full example can be found [here](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift).
+In order to define the network abstraction layer with PerfectAPIClient, an enumeration will be declared to access the API endpoints. In this example we declare a [GithubAPIClient](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift) to retrieve some Github [zen](https://api.github.com/zen) and [user information](https://api.github.com/users/sventiigi).
 
 ```swift
 import PerfectHTTP
