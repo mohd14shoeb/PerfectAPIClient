@@ -68,6 +68,12 @@ extension GithubAPIClient: APIClient {
         case .zen:
             let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
             return .success(response)
+        case .user:
+            guard let userJSON = User(name: "Sven Tiigi", type: "user").toJSONString() else {
+                return .failure("Unable to setup mock data for user endpoint")
+            }
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: userJSON)
+            return .success(response)
         default:
             return nil
         }

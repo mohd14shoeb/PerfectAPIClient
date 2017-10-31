@@ -87,13 +87,5 @@ extension JSONPlaceholderAPIClient: APIClient {
             return nil
         }
     }
-
-    func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-        print("JSONPlaceholder API Client will perform request \(url) with options: \(options)")
-    }
-    
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
-        print("JSONPlaceholder API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
-    }
     
 }

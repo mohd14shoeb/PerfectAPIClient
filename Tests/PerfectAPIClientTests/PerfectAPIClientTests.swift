@@ -20,7 +20,7 @@ class PerfectAPIClientTests: XCTestCase {
         ("testSwiftEnvExtension", testSwiftEnvExtension),
         ("testMockedGithubZenRequest", testMockedGithubZenRequest),
         ("testNetworkGithubZenRequestWithoutCompletion", testNetworkGithubZenRequestWithoutCompletion),
-        //("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
+        ("testNetworkGithubMappedUserRequest", testNetworkGithubMappedUserRequest),
         ("testNetworkJSONPlaceholderPostRequest", testNetworkJSONPlaceholderPostRequest),
         ("testMockedJSONPlacerHolderEndpoint", testMockedJSONPlacerHolderEndpoint)
     ]
@@ -61,8 +61,8 @@ class PerfectAPIClientTests: XCTestCase {
         let expectation = self.expectation(description: #function)
         GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
             result.analysis(success: { (user: User) in
-                XCTAssertNotNil(user.name)
-                XCTAssertNotNil(user.type)
+                XCTAssertEqual(user.name, "Sven Tiigi")
+                XCTAssertEqual(user.type, "user")
                 expectation.fulfill()
             }, failure: { (error: Error) in
                 XCTFail(error.localizedDescription)
