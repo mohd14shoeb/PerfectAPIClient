@@ -18,7 +18,10 @@ before_install:
   - git clone https://github.com/IBM-Swift/Package-Builder.git
   - lsb_release -a
   - openssl version -a
-  - swift --version
+  - sudo add-apt-repository ppa:0k53d-karl-f830m/openssl -y
+  - sudo apt-get update -q
+  - sudo apt-get install openssl -y
+  - openssl version -a
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
