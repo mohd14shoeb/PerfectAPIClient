@@ -231,7 +231,7 @@ func willPerformRequest(url: String, options: [CURLRequest.Option]) {
 By overriding the `didRetrieveResponse` function you can perform logging operation or something else your might want to do, after the response of an request for an `APIClient` is being retrieved.
 
 ```swift
-func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<CURLResponse>) {
+func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
     print("Did retrieve response for request \(url) with options: \(options) and result: \(result)")
 }
 ```
