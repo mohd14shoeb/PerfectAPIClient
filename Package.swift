@@ -15,6 +15,7 @@ let package = Package(
         .package(url: "https://github.com/PerfectlySoft/Perfect-HTTP.git", from: "3.0.0"),
         .package(url: "https://github.com/PerfectlySoft/Perfect-CURL.git", from: "3.0.0"),
         .package(url: "https://github.com/Hearst-DD/ObjectMapper.git", from: "3.0.0"),
+        .package(url: "https://github.com/eman6576/SwiftEnv.git", from: "1.0.0"),
     ],
     targets: [
         .target(
@@ -22,7 +23,8 @@ let package = Package(
             dependencies: [
                 "PerfectHTTP",
                 "PerfectCURL",
-                "ObjectMapper"
+                "ObjectMapper",
+                "SwiftEnv"
             ]),
         .testTarget(
             name: "PerfectAPIClientTests",

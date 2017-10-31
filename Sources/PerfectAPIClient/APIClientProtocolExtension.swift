@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectCURL
 import ObjectMapper
+import SwiftEnv
 
 // MARK: Default implementation
 
@@ -71,7 +72,7 @@ public extension APIClient {
         // Invoke will perform request
         self.willPerformRequest(url: url, options: options)
         // Check if a mockResponseResult is available and Unit Tests are running
-        if let mockResponseResult = self.mockResponseResult, ProcessInfo.isRunningTests {
+        if let mockResponseResult = self.mockResponseResult, SwiftEnv.isRunningUnitTests {
             // Unwrap completion closure
             guard let completion = completion else {
                 // No completion closure available return out of function
