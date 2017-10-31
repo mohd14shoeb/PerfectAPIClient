@@ -23,8 +23,6 @@ install:
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
-  - swift package generate-xcodeproj --enable-code-coverage
-  - xcodebuild -scheme PerfectAPIClient -enableCodeCoverage YES test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
