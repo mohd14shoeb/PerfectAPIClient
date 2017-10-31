@@ -31,7 +31,7 @@ public extension APIClient {
         // Check if first character is slash
         if path.first == "/" {
             // Chop first character
-            path = path.substring(from: path.index(path.startIndex, offsetBy: 1))
+            path = String(path.dropFirst())
         }
         // Return url
         return baseUrl + path

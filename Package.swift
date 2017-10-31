@@ -31,6 +31,5 @@ let package = Package(
             dependencies: [
                 "PerfectAPIClient"
             ]),
-    ],
-    swiftLanguageVersions: [3]
+    ]
 )
