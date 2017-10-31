@@ -12,7 +12,7 @@
 		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
 	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
-		<img src="https://img.shields.io/badge/Documentation-available-blue.svg" alt="Docs">
+		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
 	</a>
 </p>
 
