@@ -19,7 +19,7 @@ before_install:
   - chmod +x .travis/install-dependencies.sh
 
 install:
-  - ./.travis/install-dependencies.sh
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./.travis/install-dependencies.sh; fi
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
