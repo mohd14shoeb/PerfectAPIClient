@@ -8,8 +8,8 @@
 	<a href="https://travis-ci.org/SvenTiigi/PerfectAPIClient" target="_blank">
 		<img src="https://travis-ci.org/SvenTiigi/PerfectAPIClient.svg?branch=master" alt="TravisBuild">
 	</a>
-	<a href="https://swift.org/package-manager/" target="_blank">
-		<img src="https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg">
+	<a href="https://codecov.io/gh/SvenTiigi/PerfectAPIClient" target="_blank">
+		<img src="https://img.shields.io/codecov/c/github/SvenTiigi/PerfectAPIClient.svg" alt="Coverage">
 	</a>
 	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
 		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
@@ -18,7 +18,6 @@
 		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
 </p>
-
 
 PerfectAPIClient is a network abstraction layer to perform network requests via [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL) from your [Perfect Server Side Swift](https://github.com/PerfectlySoft/Perfect) application. It's heavily inspired by [Moya](https://github.com/Moya/Moya) and easy and fun to use.
 
@@ -356,7 +355,6 @@ Contributions are very welcome 🙌 🤓
 
 - [ ] Improve Unit-Tests
 - [ ] Improve Linux compatibility
-- [ ] Add Travis CI
 - [ ] Add automated Jazzy documentation generation via Travis CI
 
 ## License
