@@ -240,15 +240,46 @@ func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: API
 ```
 
 ## Mocking (Unit-Tests)
-In order to add mocking to your APIClient for unit testing your application you can return an `APIClientResult` via the `mockResponseResult` protocol variable. The `mockResponseResult` is only used when you return an `APIClientResult` and the current runtime is under `XCTest`.
+
+### APIClientTestCase
+Ensure that your test class is inherits from [APIClientTestCase](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Sources/PerfectAPIClient/TestCase/APIClientTestCase.swift) which sets an environment variable in order to allow the `APIClient` to evaluate if the runtime is under unit test conditions. If you need to override the `setUp` or `tearDown` function don't forget to call the `super` implementation.
+
+```swift
+import XCTest
+import PerfectAPIClient
+
+class MyAPIClientTestClass: APIClientTestCase {
+
+    override func setUp() {
+        super.setUp()
+        // Your setUp logic
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        // Your tearDown logic
+    }
+
+    func testMyAPIClient() {
+    	// ...
+    }
+
+}
+```
+
+### MockResponseResult
+
+In order to add mocking to your APIClient for unit testing your application you can return an `APIClientResult` via the `mockResponseResult` protocol variable. The `mockResponseResult` is only used when you return an `APIClientResult` and the current runtime is under unit test conditions.
 
 ```swift
 var mockResponseResult: APIClientResult<APIClientResponse>? {
     switch self {
     case .zen:
+        // This result will be used when unit tests are running
         let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.")
         return .success(response)
-    default:
+    case .user:
+        // A real network request will be performed when unit tests are running
         return nil
     }
 }
@@ -323,7 +354,7 @@ extension GithubAPIClient: RawRepresentable {
 ```
 Full example [GithubAPIClient.swift](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift)
 
-#### Usage
+### Usage
 
 ```swift
 print(GithubAPIClient.zen.rawValue) // zen
