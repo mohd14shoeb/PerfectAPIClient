@@ -19,7 +19,7 @@
 	</a>
 </p>
 
-PerfectAPIClient is a network abstraction layer to perform network requests via [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL) from your [Perfect Server Side Swift](https://github.com/PerfectlySoft/Perfect) application. It's heavily inspired by [Moya](https://github.com/Moya/Moya) and easy and fun to use.
+PerfectAPIClient is a network abstraction layer to perform network requests via [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL) from your [Perfect Server Side Swift](https://github.com/PerfectlySoft/Perfect) application. It's heavily inspired by [Moya](https://github.com/Moya/Moya) and it's easy and fun to use.
 
 <p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/img/diagram.png" width="40%"></p>
 
@@ -242,7 +242,7 @@ func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: API
 ## Mocking (Unit-Tests)
 
 ### APIClientTestCase
-Ensure that your test class is inherits from [APIClientTestCase](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Sources/PerfectAPIClient/TestCase/APIClientTestCase.swift) which sets an environment variable in order to allow the `APIClient` to evaluate if the runtime is under unit test conditions. If you need to override the `setUp` or `tearDown` function don't forget to call the `super` implementation.
+Ensure that your test class inherits from [APIClientTestCase](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Sources/PerfectAPIClient/TestCase/APIClientTestCase.swift) which sets an environment variable in order to allow the APIClient to evaluate if the runtime is under unit test conditions. If you need to override the `setUp` or `tearDown` function don't forget to call the `super` implementation.
 
 ```swift
 import XCTest
@@ -261,7 +261,7 @@ class MyAPIClientTestClass: APIClientTestCase {
     }
 
     func testMyAPIClient() {
-    	// ...
+    	// Your test logic
     }
 
 }
