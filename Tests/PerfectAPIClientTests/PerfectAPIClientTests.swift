@@ -50,6 +50,13 @@ class PerfectAPIClientTests: APIClientTestCase {
         self.waitForExpectations(timeout: self.timeout, handler: nil)
     }
     
+    /// Get Post for unit test
+    ///
+    /// - Returns: A Post
+    private func getPost() -> Post {
+        return Post(title: "Mr.Robot loves PerfectAPIClient", body: "Awesome body description")
+    }
+    
     // MARK: Extension Tests
     
     /// Test SwiftEnv UnitTest static property extension
@@ -72,6 +79,54 @@ class PerfectAPIClientTests: APIClientTestCase {
         }
     }
     
+    func testGithubZenEndpointWithInvalidMappable() {
+        self.performTest(#function) { (expectation) in
+            GithubAPIClient.zen.request(mappable: User.self) { (result: APIClientResult<User>) in
+                result.analysis(success: { (_) in
+                    XCTFail("Zen request shouldn't be mappable to User")
+                }, failure: { (_) in
+                    expectation.fulfill()
+                })
+            }
+        }
+    }
+    
+    func testGithubZenEndpointWithInvalidResponseMappable() {
+        self.performTest(#function) { (expectation) in
+            GithubAPIClient.zen.request(completion: { (result: APIClientResult<APIClientResponse>) in
+                result.analysis(success: { (response: APIClientResponse) in
+                    guard response.getMappablePayload(type: User.self) == nil else {
+                        XCTFail("APIResponse shouldn't be mappable to User")
+                        return
+                    }
+                    expectation.fulfill()
+                }, failure: { (error: Error) in
+                    XCTFail(error.localizedDescription)
+                })
+            })
+        }
+    }
+    
+    func testGithubZenEndpointWithInvalidPaylodJSON() {
+        self.performTest(#function) { (expectation) in
+            GithubAPIClient.zen.request(completion: { (result: APIClientResult<APIClientResponse>) in
+                result.analysis(success: { (response: APIClientResponse) in
+                    guard response.getPayloadJSON() == nil else {
+                        XCTFail("Payload shouldn't contain valid JSON")
+                        return
+                    }
+                    expectation.fulfill()
+                }, failure: { (error: Error) in
+                    XCTFail(error.localizedDescription)
+                })
+            })
+        }
+    }
+    
+    func testGithubZenEndpointWithoutCompletion() {
+        GithubAPIClient.zen.request(completion: nil)
+    }
+    
     func testGithubUserEndpoint() {
         self.performTest(#function) { (expectation) in
             GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: APIClientResult<User>) in
@@ -90,9 +145,10 @@ class PerfectAPIClientTests: APIClientTestCase {
     
     func testJSONPlaceholderPostEndpoint() {
         self.performTest(#function) { (expectation) in
-            let post = Post(title: "Mr.Robot loves PerfectAPIClient", body: "Awesome body description")
+            let post = self.getPost()
             JSONPlaceholderAPIClient.createPost(post).request { (result: APIClientResult<APIClientResponse>) in
                 result.analysis(success: { (response: APIClientResponse) in
+                    XCTAssert(response.isSuccessful)
                     guard let responsePost = response.getMappablePayload(type: Post.self) else {
                         XCTFail("Response Payload isn't a valid Post JSON")
                         return
@@ -103,6 +159,19 @@ class PerfectAPIClientTests: APIClientTestCase {
                     XCTFail(error.localizedDescription)
                 })
             }
+        }
+    }
+    
+    func testJSONPlaceholderPostEndpointInvalidMappable() {
+        self.performTest(#function) { (expectation) in
+            let post = self.getPost()
+            JSONPlaceholderAPIClient.createPost(post).request(mappable: User.self, completion: { (result: APIClientResult<User>) in
+                result.analysis(success: { (user: User) in
+                    XCTFail("JSONPlaceholderAPI createPost shouldn't be mappable to user")
+                }, failure: { (_) in
+                    expectation.fulfill()
+                })
+            })
         }
     }
     

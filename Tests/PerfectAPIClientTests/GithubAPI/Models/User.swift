@@ -19,7 +19,11 @@ struct User {
 extension User: Mappable {
     
     /// ObjectMapper initializer
-    init?(map: Map) {}
+    init?(map: Map) {
+        guard map.JSON["name"] != nil, map.JSON["type"] != nil else {
+            return nil
+        }
+    }
     
     /// Mapping
     mutating func mapping(map: Map) {
