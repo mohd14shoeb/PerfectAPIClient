@@ -20,8 +20,13 @@ class PerfectAPIClientTests: APIClientTestCase {
     static var allTests = [
         ("testSwiftEnvUnitTestExtension", testSwiftEnvUnitTestExtension),
         ("testGithubZenEndpoint", testGithubZenEndpoint),
+        ("testGithubZenEndpointWithInvalidMappable", testGithubZenEndpointWithInvalidMappable),
+        ("testGithubZenEndpointWithInvalidResponseMappable", testGithubZenEndpointWithInvalidResponseMappable),
+        ("testGithubZenEndpointWithInvalidPaylodJSON", testGithubZenEndpointWithInvalidPaylodJSON),
+        ("testGithubZenEndpointWithoutCompletion", testGithubZenEndpointWithoutCompletion),
         ("testGithubUserEndpoint", testGithubUserEndpoint),
         ("testJSONPlaceholderPostEndpoint", testJSONPlaceholderPostEndpoint),
+        ("testJSONPlaceholderPostEndpointInvalidMappable", testJSONPlaceholderPostEndpointInvalidMappable),
         ("testJSONPlacerHolderInvalidEndpoint", testJSONPlacerHolderInvalidEndpoint)
     ]
     
