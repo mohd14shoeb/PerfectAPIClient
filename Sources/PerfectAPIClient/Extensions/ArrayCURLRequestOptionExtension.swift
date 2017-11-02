@@ -21,7 +21,7 @@ extension Array where Element == CURLRequest.Option {
         // Append HTTP Header for each key value pair
         headers.forEach { (key: String, value: String) in
             self.append(
-                .addHeader(CURLRequest.Header.Name.custom(name: key), value)
+                .addHeader(.custom(name: key), value)
             )
         }
     }

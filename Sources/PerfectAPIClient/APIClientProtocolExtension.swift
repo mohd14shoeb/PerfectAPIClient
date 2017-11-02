@@ -60,9 +60,9 @@ public extension APIClient {
         // Check if a request payload object is available
         if let payloadString = self.requestPayload?.toJSONString() {
             // Append payload as json encoded string
-            options.append(
-                .postString(payloadString)
-            )
+            options.append(.postString(payloadString))
+            // Append HTTP header content type JSON
+            options.append(.addHeader(.contentType, "application/json"))
         }
         // Add authentication HTTP Headers
         options.add(httpHeaders: self.authenticationHeaders)
@@ -70,41 +70,17 @@ public extension APIClient {
         options.add(httpHeaders: self.headers)
         // Invoke will perform request
         self.willPerformRequest(url: url, options: options)
-        // Check if a mockResponseResult is available and Unit Tests are running
-        if let mockResponseResult = self.mockResponseResult, SwiftEnv.isRunningUnitTests {
-            // Unwrap completion closure
+        // Perform API request with url and options and handle requestCompletion result
+        self.performRequest(url: url, options: options) { (result: APIClientResult<APIClientResponse>) in
+            // Invoke didRetrieveResponse with result
+            self.didRetrieveResponse(url: url, options: options, result: result)
+            // Unwrap completion clousre
             guard let completion = completion else {
-                // No completion closure available return out of function
+                // No completion closure return out of function
                 return
             }
-            // Invoke completion with mockResponseResult
-            completion(mockResponseResult)
-        } else {
-            // Perform network request
-            CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
-                // Declare APIClientResult with CURLResponse
-                let result: APIClientResult<APIClientResponse>
-                defer {
-                    // Defer didRetrieveResponse invocation
-                    self.didRetrieveResponse(url: url, options: options, result: result)
-                }
-                do {
-                    // Try to retrieve response
-                    let response = try curlResponse()
-                    // Set result with success and response object
-                    result = .success(APIClientResponse(curlResponse: response))
-                } catch {
-                    // Set result with failure and error object
-                    result = .failure(error)
-                }
-                // Unwrap completion clousre
-                guard let completion = completion else {
-                    // No completion closure return out of function
-                    return
-                }
-                // Invoke completion with result
-                completion(result)
-            }
+            // Invoke completion with result
+            completion(result)
         }
     }
     
@@ -128,7 +104,7 @@ public extension APIClient {
                 // Invoke modify responseJSON
                 self.modify(responseJSON: &json, mappable: mappable)
                 // Try to map response via mapped response type
-                guard let mappedResponse = response.getMappablePayload(type: mappable, customPayload: json) else {
+                guard let mappedResponse = mappable.init(JSON: json) else {
                     // Unable to map response
                     completion(.failure("Unable to map response with type: \(mappable)"))
                     // Return out of function
@@ -164,5 +140,39 @@ public extension APIClient {
     ///   - options: The supplied request options
     ///   - result: The APIClientResult
     func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {}
+    
+}
+
+// MARK: Perform Request
+
+fileprivate extension APIClient {
+    
+    /// Perform API request which evaluates if a network request or a mocked response
+    /// result should be returned via the request completion closure
+    ///
+    /// - Parameters:
+    ///   - url: The request url
+    ///   - options: The request options
+    ///   - requestCompletion: The request completion closure after result has been retrieved
+    func performRequest(url: String, options: [CURLRequest.Option], requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
+        // Check if a mockedResponseResult object is available and runtime is under unit test conditions
+        if let mockedResponseResult = self.mockResponseResult, SwiftEnv.isRunningAPIClientUnitTests {
+            // Invoke requestCompletion with mockedResponseResult
+            requestCompletion(mockedResponseResult)
+        } else {
+            // Perform network request
+            CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
+                do {
+                    // Try to retrieve CURLResponse and construct APIClientResponse
+                    let response = APIClientResponse(curlResponse: try curlResponse())
+                    // Invoke requestCompletion with success case and APIClientResponse
+                    requestCompletion(.success(response))
+                } catch {
+                    // Invoke requestCompletion with failure and error
+                    requestCompletion(.failure(error))
+                }
+            }
+        }
+    }
     
 }

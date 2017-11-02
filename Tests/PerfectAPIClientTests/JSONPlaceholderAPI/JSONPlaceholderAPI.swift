@@ -15,7 +15,7 @@ enum JSONPlaceholderAPIClient {
     /// Create a post
     case createPost(Post)
     /// An unavailable endpoint
-    case mockedEndpoint
+    case invalidEndpoint
 }
 
 // MARK: APIClient
@@ -23,14 +23,14 @@ enum JSONPlaceholderAPIClient {
 extension JSONPlaceholderAPIClient: APIClient {
     
     var baseURL: String {
-        return "https://jsonplaceholder.typicode.com"
+        return "https://jsonplaceholder.typicode.com/"
     }
     
     var path: String {
         switch self {
         case .createPost:
-            return "/posts"
-        case .mockedEndpoint:
+            return "posts"
+        case .invalidEndpoint:
             return "invalidEndpoint"
         }
     }
@@ -39,7 +39,7 @@ extension JSONPlaceholderAPIClient: APIClient {
         switch self {
         case .createPost:
             return .post
-        case .mockedEndpoint:
+        case .invalidEndpoint:
             return .get
         }
     }
@@ -66,26 +66,12 @@ extension JSONPlaceholderAPIClient: APIClient {
     }
     
     var options: [CURLRequest.Option]? {
-        switch self {
-        case .createPost:
-            // Return custom timeout
-            return [.timeout(15)]
-        default:
-            return nil
-        }
+        // Return custom timeout
+        return [.timeout(15)]
     }
     
     var mockResponseResult: APIClientResult<APIClientResponse>? {
-        switch self {
-        case .mockedEndpoint:
-            guard let postJSON = Post(title: "I'm a mocked Post", body: "Just for unit tests").toJSONString() else {
-                return .failure("Unable to construct mocked Post JSON for unit tests")
-            }
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: postJSON, headers: ["UnitTest": "Rocks with PerfectAPIClient"])
-            return .success(response)
-        default:
-            return nil
-        }
+        return nil
     }
     
 }

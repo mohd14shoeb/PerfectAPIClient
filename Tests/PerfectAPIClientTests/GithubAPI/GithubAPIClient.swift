@@ -22,6 +22,8 @@ enum GithubAPIClient {
 
 extension GithubAPIClient: APIClient {
     
+    public static let test = ""
+    
     var baseURL: String {
         return "https://api.github.com/"
     }
@@ -74,18 +76,15 @@ extension GithubAPIClient: APIClient {
             }
             let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: userJSON)
             return .success(response)
-        default:
-            return nil
         }
     }
     
     func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-        print("Github API Client will perform request \(url) with options: \(options)")
+        print("Github API Client \(self.rawValue) will perform request \(url) with options: \(options)")
     }
     
     func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
-        print("Github API Client did retrieve response for request \(url) with options: \(options) and result: \(result)")
-        print(GithubAPIClient.user)
+        print("Github API Client \(self.rawValue) did retrieve response for request \(url) with options: \(options) and result: \(result)")
     }
     
 }

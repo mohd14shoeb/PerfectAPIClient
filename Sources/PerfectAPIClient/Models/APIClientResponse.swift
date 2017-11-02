@@ -94,27 +94,15 @@ public struct APIClientResponse {
     ///
     /// - Parameters:
     ///   - type: The mappable type
-    ///   - customPayload: Optional custom payload that should be used for mapping
     /// - Returns: The mapped object type
-    public func getMappablePayload<T: BaseMappable>(type: T.Type, customPayload: [String: Any]? = nil) -> T? {
-        // Check if a custom payload is available
-        if let customPayload = customPayload {
-            // Try to construct mappable with custom payload
-            guard let mappable = type.init(JSON: customPayload) else {
-                // Unable to construct return nil
-                return nil
-            }
-            // Return mapped object
-            return mappable
-        } else {
-            // Try to construct mappable with payload
-            guard let mappable = type.init(JSONString: self.payload) else {
-                // Unable to construct return nil
-                return nil
-            }
-            // Return mapped object
-            return mappable
+    public func getMappablePayload<T: BaseMappable>(type: T.Type) -> T? {
+        // Try to construct mappable with payload
+        guard let mappable = type.init(JSONString: self.payload) else {
+            // Unable to construct return nil
+            return nil
         }
+        // Return mapped object
+        return mappable
     }
     
 }
