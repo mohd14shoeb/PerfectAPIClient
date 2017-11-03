@@ -51,6 +51,10 @@ let package = Package(
         .target(
             name: "MyPackage",
             dependencies: ["PerfectAPIClient"]
+        ),
+        .testTarget(
+            name: "MyPackageTests",
+            dependencies: ["MyPackage", "PerfectAPIClient"]
         )
     ]
 )
