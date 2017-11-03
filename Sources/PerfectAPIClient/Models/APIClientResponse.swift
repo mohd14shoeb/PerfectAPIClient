@@ -20,7 +20,7 @@ public struct APIClientResponse {
     public let status: HTTPResponseStatus
     
     /// The payload
-    public let payload: String
+    public var payload: String
     
     /// Indicating if the response is successful (Status code: 200 - 299)
     public var isSuccessful: Bool {
