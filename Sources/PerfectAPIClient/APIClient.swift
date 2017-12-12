@@ -58,12 +58,26 @@ public protocol APIClient {
     ///   - completion: The completion closure with APIClientresult
     func request<T: BaseMappable>(mappable: T.Type, completion: @escaping (APIClientResult<T>) -> Void)
     
+    /// Request the API endpoint to retrieve response as mappable object array
+    ///
+    /// - Parameters:
+    ///   - mappable: The mappable object type
+    ///   - completion: The completion closure with APIClientResult
+    func request<T: BaseMappable>(mappable: T.Type, completion: @escaping (APIClientResult<[T]>) -> Void)
+    
     /// Modify response payload for mappable
     ///
     /// - Parameters:
     ///   - responseJSON: The response JSON
     ///   - mappable: The mappable object type that should be mapped to
     func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type)
+    
+    /// Modify response payload array for mappable
+    ///
+    /// - Parameters:
+    ///   - responseJSONArray: The response JSON array
+    ///   - mappable: The mappable object type that should be mapped to
+    func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappable.Type)
     
     /// Will perform request to API endpoint
     ///

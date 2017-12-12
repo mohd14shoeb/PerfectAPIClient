@@ -75,7 +75,7 @@ class PerfectAPIClientTests: APIClientTestCase {
         self.performTest(#function) { (expectation) in
             GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
                 result.analysis(success: { (response: APIClientResponse) in
-                    XCTAssertEqual(response.payload, "Some zen for you my friend")
+                    XCTAssertTrue(!response.payload.isEmpty)
                     expectation.fulfill()
                 }, failure: { (error: Error) in
                     XCTFail(error.localizedDescription)
@@ -146,6 +146,24 @@ class PerfectAPIClientTests: APIClientTestCase {
         }
     }
     
+    func testGithubUserRepositoriesEndpoint() {
+        self.performTest(#function) { (expectation) in
+            GithubAPIClient.repositories(userName: "sventiigi").request(mappable: Repository.self, completion: { (result: APIClientResult<[Repository]>) in
+                result.analysis(success: { (repositories: [Repository]) in
+                    guard let repository = repositories.first else {
+                        XCTFail("Repositories Response should contain at least one element")
+                        return
+                    }
+                    XCTAssertEqual(repository.name, "PerfectAPIClient")
+                    XCTAssertEqual(repository.fullName, "SvenTiigi/PerfectAPIClient")
+                    expectation.fulfill()
+                }, failure: { (error: Error) in
+                    XCTFail(error.localizedDescription)
+                })
+            })
+        }
+    }
+
     // MARK: JSONPlaceholder Tests [Network]
     
     func testJSONPlaceholderPostEndpoint() {

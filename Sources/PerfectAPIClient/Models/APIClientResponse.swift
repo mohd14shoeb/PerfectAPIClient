@@ -90,6 +90,21 @@ public struct APIClientResponse {
         return json
     }
     
+    /// Retrieve Payload in JSON Array format
+    ///
+    /// - Returns: The payload as Array
+    public func getPayloadJSONArray() -> [[String: Any]]? {
+        // Instantiate Data object from payload
+        let data = Data(self.payload.utf8)
+        // JSONSerialization payload data to Array
+        guard let jsonArray = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [[String: Any]] else {
+            // JSONSerialization fails return nil
+            return nil
+        }
+        // Return JSON Array
+        return jsonArray
+    }
+    
     /// Retrieve Payload as Mappable Type
     ///
     /// - Parameters:
@@ -103,6 +118,20 @@ public struct APIClientResponse {
         }
         // Return mapped object
         return mappable
+    }
+    
+    /// Retrieve Payload as Mappable Array Type
+    ///
+    /// - Parameter type: The mappable type
+    /// - Returns: The mapped object array
+    public func getMappablePayloadArray<T: BaseMappable>(type: T.Type) -> [T]? {
+        // Try to construct mappables with payload
+        guard let mappables = Mapper<T>().mapArray(JSONString: self.payload) else {
+            // Unable to construct mappables return nil
+            return nil
+        }
+        // Return mapped objects
+        return mappables
     }
     
 }

@@ -119,12 +119,49 @@ public extension APIClient {
         }
     }
     
+    /// Request the API endpoint to retrieve response as mappable object array
+    ///
+    /// - Parameters:
+    ///   - mappable: The mappable object type
+    ///   - completion: The completion closure with APIClientResult
+    func request<T: BaseMappable>(mappable: T.Type, completion: @escaping (APIClientResult<[T]>) -> Void) {
+        // Perform request to retrieve response
+        self.request { (result: APIClientResult<APIClientResponse>) in
+            // Analysis request result
+            result.analysis(success: { (response: APIClientResponse) in
+                // Unwrap payload JSON
+                guard var jsonArray = response.getPayloadJSONArray() else {
+                    // Payload isn't a valid JSON
+                    completion(.failure("Response payload isn't a valid JSON"))
+                    // Return out of function
+                    return
+                }
+                // Invoke modify responseJSONArray
+                self.modify(responseJSONArray: &jsonArray, mappable: mappable)
+                // Map JSON Array to Mappable Object Array
+                let mappedResponseArray = Mapper<T>().mapArray(JSONArray: jsonArray)
+                // Mapping succeded complete with success
+                completion(.success(mappedResponseArray))
+            }, failure: { (error: Error) in
+                // Complete with error
+                completion(.failure(error))
+            })
+        }
+    }
+    
     /// Modify response payload for mappable
     ///
     /// - Parameters:
     ///   - responseJSON: The response JSON
     ///   - mappable: The mappable object type that should be mapped to
     func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type) {}
+    
+    /// Modify response payload array for mappable
+    ///
+    /// - Parameters:
+    ///   - responseJSONArray: The response JSON array
+    ///   - mappable: The mappable object type that should be mapped to
+    func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappable.Type) {}
     
     /// Will perform request to API endpoint
     ///

@@ -16,6 +16,8 @@ enum GithubAPIClient {
     case zen
     /// Retrieve user info for given username
     case user(name: String)
+    /// Retrieve repositories for user name
+    case repositories(userName: String)
 }
 
 // MARK: APIClient
@@ -34,6 +36,8 @@ extension GithubAPIClient: APIClient {
             return "zen"
         case .user(name: let name):
             return "users/\(name)"
+        case .repositories(userName: let name):
+            return "users/\(name)/repos"
         }
     }
     
@@ -42,6 +46,8 @@ extension GithubAPIClient: APIClient {
         case .zen:
             return .get
         case .user:
+            return .get
+        case .repositories:
             return .get
         }
     }
@@ -68,13 +74,22 @@ extension GithubAPIClient: APIClient {
     var mockResponseResult: APIClientResult<APIClientResponse>? {
         switch self {
         case .zen:
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
-            return .success(response)
+            // Perform real network request
+            return nil
         case .user:
             guard let userJSON = User(name: "Sven Tiigi", type: "user").toJSONString() else {
                 return .failure("Unable to setup mock data for user endpoint")
             }
             let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: userJSON)
+            return .success(response)
+        case .repositories:
+            var repository = Repository()
+            repository.name = "PerfectAPIClient"
+            repository.fullName = "SvenTiigi/PerfectAPIClient"
+            guard let repositoriesJSON = [repository].toJSONString() else {
+                return .failure("Unable to setup mock data for repositories endpoint")
+            }
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: repositoriesJSON)
             return .success(response)
         }
     }
