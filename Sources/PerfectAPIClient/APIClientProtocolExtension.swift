@@ -104,7 +104,7 @@ public extension APIClient {
                 // Invoke modify responseJSON
                 self.modify(responseJSON: &json, mappable: mappable)
                 // Try to map response via mapped response type
-                guard let mappedResponse = mappable.init(JSON: json) else {
+                guard let mappedResponse = Mapper<T>().map(JSON: json) else {
                     // Unable to map response
                     completion(.failure("Unable to map response with type: \(mappable)"))
                     // Return out of function
@@ -132,7 +132,7 @@ public extension APIClient {
                 // Unwrap payload JSON
                 guard var jsonArray = response.getPayloadJSONArray() else {
                     // Payload isn't a valid JSON
-                    completion(.failure("Response payload isn't a valid JSON"))
+                    completion(.failure("Response payload isn't a valid JSON Array"))
                     // Return out of function
                     return
                 }
