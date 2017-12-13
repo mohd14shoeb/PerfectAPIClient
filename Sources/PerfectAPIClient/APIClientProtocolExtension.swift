@@ -48,10 +48,7 @@ public extension APIClient {
         // Get URL
         let url = self.getRequestURL()
         // Setup CURL Options with default options
-        var options: [CURLRequest.Option] = [
-            .httpMethod(self.method),
-            .failOnError
-        ]
+        var options: [CURLRequest.Option] = [.httpMethod(self.method)]
         // Check if additional options are available
         if let apiOptions = self.options {
             // Append apiOptions
@@ -106,7 +103,7 @@ public extension APIClient {
                 // Try to map response via mapped response type
                 guard let mappedResponse = Mapper<T>().map(JSON: json) else {
                     // Unable to map response
-                    completion(.failure("Unable to map response with type: \(mappable)"))
+                    completion(.failure("Unable to map response for type: \(mappable)"))
                     // Return out of function
                     return
                 }
@@ -197,13 +194,19 @@ fileprivate extension APIClient {
             // Invoke requestCompletion with mockedResponseResult
             requestCompletion(mockedResponseResult)
         } else {
-            // Perform network request
+            // Perform network request for url and options
             CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
                 do {
                     // Try to retrieve CURLResponse and construct APIClientResponse
                     let response = APIClientResponse(curlResponse: try curlResponse())
-                    // Invoke requestCompletion with success case and APIClientResponse
-                    requestCompletion(.success(response))
+                    // Check if response HTTP status code is successful
+                    if response.isSuccessful {
+                        // Invoke requestCompletion with success case and APIClientResponse
+                        requestCompletion(.success(response))
+                    } else {
+                        // Invoke request completion with failure and response
+                        requestCompletion(.failure(response))
+                    }
                 } catch {
                     // Invoke requestCompletion with failure and error
                     requestCompletion(.failure(error))
