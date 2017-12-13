@@ -163,6 +163,18 @@ class PerfectAPIClientTests: APIClientTestCase {
             })
         }
     }
+    
+    func testGithubUserRepositoriesEndpointWithInvalidMappable() {
+        self.performTest(#function) { (expectation) in
+            GithubAPIClient.repositories(userName: "sventiigi").request(mappable: User.self, completion: { (result: APIClientResult<[User]>) in
+                result.analysis(success: { (users: [User]) in
+                    XCTFail("Endpoint shouldn't be mappable to type User array")
+                }, failure: { (error: Error) in
+                    expectation.fulfill()
+                })
+            })
+        }
+    }
 
     // MARK: JSONPlaceholder Tests [Network]
     
