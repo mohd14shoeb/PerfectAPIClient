@@ -137,6 +137,13 @@ public extension APIClient {
                 self.modify(responseJSONArray: &jsonArray, mappable: mappable)
                 // Map JSON Array to Mappable Object Array
                 let mappedResponseArray = Mapper<T>().mapArray(JSONArray: jsonArray)
+                // Check if ObjectMapper mapped the json array to given type
+                if jsonArray.count != mappedResponseArray.count {
+                    // Unable to map response
+                    completion(.failure("Unable to map response array for type: \(mappable)"))
+                    // Return out of function
+                    return
+                }
                 // Mapping succeded complete with success
                 completion(.success(mappedResponseArray))
             }, failure: { (error: Error) in
