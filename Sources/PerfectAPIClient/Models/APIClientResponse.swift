@@ -11,7 +11,7 @@ import PerfectHTTP
 import ObjectMapper
 
 /// APIClientResponse represents an API response
-public struct APIClientResponse {
+public struct APIClientResponse: Error {
     
     /// The request url
     public let url: String
@@ -21,6 +21,11 @@ public struct APIClientResponse {
     
     /// The payload
     public var payload: String
+    
+    /// The localized description for an error
+    public var localizedDescription: String {
+        return "\(String(describing: APIClientResponse.self)) retrieved bad response code: \(self.status.code) => \(self)"
+    }
     
     /// Indicating if the response is successful (Status code: 200 - 299)
     public var isSuccessful: Bool {
@@ -112,7 +117,7 @@ public struct APIClientResponse {
     /// - Returns: The mapped object type
     public func getMappablePayload<T: BaseMappable>(type: T.Type) -> T? {
         // Try to construct mappable with payload
-        guard let mappable = type.init(JSONString: self.payload) else {
+        guard let mappable = Mapper<T>().map(JSONString: self.payload) else {
             // Unable to construct return nil
             return nil
         }
@@ -132,6 +137,38 @@ public struct APIClientResponse {
         }
         // Return mapped objects
         return mappables
+    }
+    
+}
+
+// MARK: CustomStringConvertible Extension
+
+extension APIClientResponse: CustomStringConvertible {
+    
+    /// A textual representation of this APIClientResponse instance.
+    public var description: String {
+        // Initialize empty JSON string
+        let emptyJSON = "{}"
+        // Initialize responseJSON description
+        let responseJSON: [String: Any?] = [
+            "url": self.url,
+            "status": self.status,
+            "payload": self.payload,
+            "isSuccessful": self.isSuccessful,
+            "curlResponse": self.curlResponse
+        ]
+        // Try to construct JSON data from response JSON
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: responseJSON, options: .prettyPrinted) else {
+            // JSONSerialization failed return empty JSON string
+            return emptyJSON
+        }
+        // Try to construct a String from jsonData with UTF-8 encoding
+        guard let json = String(data: jsonData, encoding: .utf8) else {
+            // Return empty JSON string
+            return emptyJSON
+        }
+        // Return the response JSON description as String
+        return json
     }
     
 }
