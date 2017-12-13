@@ -74,8 +74,8 @@ extension GithubAPIClient: APIClient {
     var mockResponseResult: APIClientResult<APIClientResponse>? {
         switch self {
         case .zen:
-            // Perform real network request
-            return nil
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
+            return .success(response)
         case .user:
             guard let userJSON = User(name: "Sven Tiigi", type: "user").toJSONString() else {
                 return .failure("Unable to setup mock data for user endpoint")

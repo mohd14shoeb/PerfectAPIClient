@@ -75,7 +75,7 @@ class PerfectAPIClientTests: APIClientTestCase {
         self.performTest(#function) { (expectation) in
             GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
                 result.analysis(success: { (response: APIClientResponse) in
-                    XCTAssertTrue(!response.payload.isEmpty)
+                    XCTAssertEqual(response.payload, "Some zen for you my friend")
                     expectation.fulfill()
                 }, failure: { (error: Error) in
                     XCTFail(error.localizedDescription)
