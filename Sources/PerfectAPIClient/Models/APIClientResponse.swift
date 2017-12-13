@@ -150,15 +150,14 @@ extension APIClientResponse: CustomStringConvertible {
         // Initialize empty JSON string
         let emptyJSON = "{}"
         // Initialize responseJSON description
-        let responseJSON: [String: Any?] = [
+        let responseJSON: [String: Any] = [
             "url": self.url,
-            "status": self.status,
+            "status": self.status.description,
             "payload": self.payload,
             "isSuccessful": self.isSuccessful,
-            "curlResponse": self.curlResponse
         ]
         // Try to construct JSON data from response JSON
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: responseJSON, options: .prettyPrinted) else {
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: responseJSON, options: [.prettyPrinted]) else {
             // JSONSerialization failed return empty JSON string
             return emptyJSON
         }
