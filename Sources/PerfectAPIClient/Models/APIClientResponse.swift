@@ -24,7 +24,7 @@ public struct APIClientResponse: Error {
     
     /// The localized description for an error
     public var localizedDescription: String {
-        return "\(String(describing: APIClientResponse.self)) retrieved bad response code: \(self.status.code) => \(self)"
+        return "APIClientResponse retrieved bad response code: \(self.status.code) => \(self)"
     }
     
     /// Indicating if the response is successful (Status code: 200 - 299)
@@ -154,7 +154,7 @@ extension APIClientResponse: CustomStringConvertible {
             "url": self.url,
             "status": self.status.description,
             "payload": self.payload,
-            "isSuccessful": self.isSuccessful,
+            "isSuccessful": self.isSuccessful
         ]
         // Try to construct JSON data from response JSON
         guard let jsonData = try? JSONSerialization.data(withJSONObject: responseJSON, options: [.prettyPrinted]) else {
