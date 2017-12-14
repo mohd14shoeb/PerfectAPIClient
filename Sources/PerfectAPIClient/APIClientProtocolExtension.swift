@@ -200,24 +200,23 @@ fileprivate extension APIClient {
         if let mockedResponseResult = self.mockResponseResult, SwiftEnv.isRunningAPIClientUnitTests {
             // Invoke requestCompletion with mockedResponseResult
             requestCompletion(mockedResponseResult)
-        } else {
-            // Perform network request for url and options
-            CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
-                do {
-                    // Try to retrieve CURLResponse and construct APIClientResponse
-                    let response = APIClientResponse(curlResponse: try curlResponse())
-                    // Check if response HTTP status code is successful
-                    if response.isSuccessful {
-                        // Invoke requestCompletion with success case and APIClientResponse
-                        requestCompletion(.success(response))
-                    } else {
-                        // Invoke request completion with failure and response
-                        requestCompletion(.failure(response))
-                    }
-                } catch {
-                    // Invoke requestCompletion with failure and error
-                    requestCompletion(.failure(error))
-                }
+            // Return out of function
+            return
+        }
+        // Perform network request for url and options
+        CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
+            do {
+                // Try to retrieve CURLResponse and construct APIClientResponse
+                let response = APIClientResponse(curlResponse: try curlResponse())
+                // Declare result
+                let result: APIClientResult<APIClientResponse>
+                // Initialize result by evaluating response HTTP status code
+                result = response.isSuccessful ? .success(response) : .failure(response)
+                // Invoke request completion with result
+                requestCompletion(result)
+            } catch {
+                // Invoke requestCompletion with failure and error
+                requestCompletion(.failure(error))
             }
         }
     }
