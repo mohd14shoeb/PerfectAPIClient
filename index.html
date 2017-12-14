@@ -28,6 +28,14 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/APIClientTestCase.html">APIClientTestCase</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -89,7 +97,7 @@
     </a>
 </p>
 
-<p>PerfectAPIClient is a network abstraction layer to perform network requests via <a href="https://github.com/PerfectlySoft/Perfect-CURL">Perfect-CURL</a> from your <a href="https://github.com/PerfectlySoft/Perfect">Perfect Server Side Swift</a> application. It&rsquo;s heavily inspired by <a href="https://github.com/Moya/Moya">Moya</a> and easy and fun to use.</p>
+<p>PerfectAPIClient is a network abstraction layer to perform network requests via <a href="https://github.com/PerfectlySoft/Perfect-CURL">Perfect-CURL</a> from your <a href="https://github.com/PerfectlySoft/Perfect">Perfect Server Side Swift</a> application. It&rsquo;s heavily inspired by <a href="https://github.com/Moya/Moya">Moya</a> and it&rsquo;s easy and fun to use.</p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/img/diagram.png" width="40%"></p>
 <h2 id='installation' class='heading'>Installation</h2>
@@ -118,6 +126,10 @@
         <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
             <span class="nv">name</span><span class="p">:</span> <span class="s">"MyPackage"</span><span class="p">,</span>
             <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="s">"PerfectAPIClient"</span><span class="p">]</span>
+        <span class="p">),</span>
+        <span class="o">.</span><span class="nf">testTarget</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"MyPackageTests"</span><span class="p">,</span>
+            <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="s">"MyPackage"</span><span class="p">,</span> <span class="s">"PerfectAPIClient"</span><span class="p">]</span>
         <span class="p">)</span>
     <span class="p">]</span>
 <span class="p">)</span>
@@ -125,7 +137,8 @@
 <h2 id='setup' class='heading'>Setup</h2>
 
 <p>In order to define the network abstraction layer with PerfectAPIClient, an enumeration will be declared to access the API endpoints. In this example we declare a <a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift">GithubAPIClient</a> to retrieve some Github <a href="https://api.github.com/zen">zen</a> and <a href="https://api.github.com/users/sventiigi">user information</a>.</p>
-<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">PerfectHTTP</span>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">PerfectAPIClient</span>
+<span class="kd">import</span> <span class="kt">PerfectHTTP</span>
 <span class="kd">import</span> <span class="kt">PerfectCURL</span>
 <span class="kd">import</span> <span class="kt">ObjectMapper</span>
 
@@ -135,6 +148,8 @@
     <span class="k">case</span> <span class="n">zen</span>
     <span class="c1">/// Retrieve user info for given username</span>
     <span class="k">case</span> <span class="nf">user</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+    <span class="c1">/// Retrieve repositories for user name</span>
+    <span class="k">case</span> <span class="nf">repositories</span><span class="p">(</span><span class="nv">userName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -155,6 +170,8 @@
             <span class="k">return</span> <span class="s">"zen"</span>
         <span class="k">case</span> <span class="o">.</span><span class="nf">user</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="k">let</span> <span class="nv">name</span><span class="p">):</span>
             <span class="k">return</span> <span class="s">"users/</span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">"</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">repositories</span><span class="p">(</span><span class="nv">userName</span><span class="p">:</span> <span class="k">let</span> <span class="nv">name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">"users/</span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">/repos"</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
@@ -164,6 +181,8 @@
         <span class="k">case</span> <span class="o">.</span><span class="nv">zen</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">.</span><span class="k">get</span>
         <span class="k">case</span> <span class="o">.</span><span class="nv">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">.</span><span class="k">get</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">repositories</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">.</span><span class="k">get</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -215,6 +234,7 @@
         <span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="nf">getHTTPHeader</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="s">"Content-Type"</span><span class="p">))</span> <span class="c1">// HTTP header field</span>
         <span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">getPayloadJSON</span><span class="p">)</span> <span class="c1">// The payload as JSON/Dictionary</span>
         <span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="nf">getMappablePayload</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">SomethingMappable</span><span class="o">.</span><span class="k">self</span><span class="p">))</span> <span class="c1">// Map payload into an object</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="nf">getMappablePayloadArray</span><span class="p">(</span><span class="kt">SomethingMappable</span><span class="o">.</span><span class="k">self</span><span class="p">))</span> <span class="c1">// JSON Array</span>
     <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span> <span class="k">in</span>
         <span class="c1">// Oh boy you are in trouble 😨</span>
     <span class="p">}</span>
@@ -228,6 +248,17 @@
         <span class="nf">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="c1">// Sven Tiigi</span>
     <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span> <span class="k">in</span>
         <span class="c1">// Oh boy you are in trouble again 😱</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>If your response contains an <code>JSON Array</code>:</p>
+<pre class="highlight swift"><code><span class="kt">GithubAPIClient</span><span class="o">.</span><span class="nf">repositories</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="s">"sventiigi"</span><span class="p">)</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="nv">mappable</span><span class="p">:</span> <span class="kt">Repository</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">APIClientResult</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Repository</span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">analysis</span><span class="p">(</span><span class="nv">success</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">repositories</span><span class="p">:</span> <span class="p">[</span><span class="kt">Repository</span><span class="p">])</span> <span class="k">in</span>
+        <span class="c1">// Do awesome stuff with the repositories</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">repositories</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+    <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span> <span class="k">in</span>
+        <span class="c1">// 🙈</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -271,6 +302,13 @@
     <span class="n">responseJSON</span> <span class="o">=</span> <span class="n">responseJSON</span><span class="p">[</span><span class="s">"result"</span><span class="p">]</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="p">??</span> <span class="n">responseJSON</span>
 <span class="p">}</span>
 </code></pre>
+<h3 id='modify-json-array-before-mapping' class='heading'>Modify JSON Array before Mapping</h3>
+
+<p>By overriding the <code>modify(responseJSONArray ...)</code> function you can update the response JSON Array before it&rsquo;s being mapped to an mappable array.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">modify</span><span class="p">(</span><span class="nv">responseJSONArray</span><span class="p">:</span> <span class="k">inout</span> <span class="p">[[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]],</span> <span class="nv">mappable</span><span class="p">:</span> <span class="kt">BaseMappable</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Manipulate the responseJSONArray if you need so</span>
+<span class="p">}</span>
+</code></pre>
 <h2 id='logging' class='heading'>Logging</h2>
 
 <p>By overrding the following two functions you can add logging to your request before the request started and when a response is retrieved or something else you might want to do.</p>
@@ -289,14 +327,41 @@
 <span class="p">}</span>
 </code></pre>
 <h2 id='mocking-unit-tests' class='heading'>Mocking (Unit-Tests)</h2>
+<h3 id='apiclienttestcase' class='heading'>APIClientTestCase</h3>
 
-<p>In order to add mocking to your APIClient for unit testing your application you can return an <code><a href="Enums/APIClientResult.html">APIClientResult</a></code> via the <code>mockResponseResult</code> protocol variable. The <code>mockResponseResult</code> is only used when you return an <code><a href="Enums/APIClientResult.html">APIClientResult</a></code> and the current runtime is under <code>XCTest</code>.</p>
+<p>Ensure that your test class inherits from <a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Sources/PerfectAPIClient/TestCase/APIClientTestCase.swift">APIClientTestCase</a> which sets an environment variable in order to allow the APIClient to evaluate if the runtime is under unit test conditions. If you need to override the <code>setUp</code> or <code>tearDown</code> function don&rsquo;t forget to call the <code>super</code> implementation.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">XCTest</span>
+<span class="kd">import</span> <span class="kt">PerfectAPIClient</span>
+
+<span class="kd">class</span> <span class="kt">MyAPIClientTestClass</span><span class="p">:</span> <span class="kt">APIClientTestCase</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">setUp</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">setUp</span><span class="p">()</span>
+        <span class="c1">// Your setUp logic</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">tearDown</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">tearDown</span><span class="p">()</span>
+        <span class="c1">// Your tearDown logic</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">testMyAPIClient</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Your test logic</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+<h3 id='mockresponseresult' class='heading'>MockResponseResult</h3>
+
+<p>In order to add mocking to your APIClient for unit testing your application you can return an <code><a href="Enums/APIClientResult.html">APIClientResult</a></code> via the <code>mockResponseResult</code> protocol variable. The <code>mockResponseResult</code> is only used when you return an <code><a href="Enums/APIClientResult.html">APIClientResult</a></code> and the current runtime is under unit test conditions.</p>
 <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">mockResponseResult</span><span class="p">:</span> <span class="kt">APIClientResult</span><span class="o">&lt;</span><span class="kt">APIClientResponse</span><span class="o">&gt;</span><span class="p">?</span> <span class="p">{</span>
     <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
     <span class="k">case</span> <span class="o">.</span><span class="nv">zen</span><span class="p">:</span>
+        <span class="c1">// This result will be used when unit tests are running</span>
         <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="kt">APIClientResponse</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="nf">getRequestURL</span><span class="p">(),</span> <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="n">ok</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="s">"Keep it logically awesome."</span><span class="p">)</span>
         <span class="k">return</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-    <span class="k">default</span><span class="p">:</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">user</span><span class="p">:</span>
+        <span class="c1">// A real network request will be performed when unit tests are running</span>
         <span class="k">return</span> <span class="kc">nil</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -319,11 +384,11 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>Put a slash at the end of your <code>baseURL</code> and skip the slash at the beginning of your <code>path</code>. But don&rsquo;t worry <code><a href="Protocols/APIClient.html">APIClient</a></code> has a default implementation for the <code>getRequestURL()</code> function which add a slash to the <code>baseURL</code> if you forgot it and remove the first character of your <code>path</code> if it&rsquo;s a slash. If you want to change the behavior just override the function 👌.</p>
+<p>Put a slash at the end of your <code>baseURL</code> and skip the slash at the beginning of your <code>path</code>. But don&rsquo;t worry <code><a href="Protocols/APIClient.html">APIClient</a></code> has a default implementation for the <code>getRequestURL()</code> function which add a slash to the <code>baseURL</code> if you forgot it and remove the first character of your <code>path</code> if it&rsquo;s a slash. If you want to change the behavior just override the function 👌</p>
 <h2 id='rawrepresentable' class='heading'>RawRepresentable</h2>
 
 <p>As most of your enumeration cases will be mixed with <a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID148">Associated Values</a> and some without, it&rsquo;s hard to retrieve the enumerations name as a String because you can&rsquo;t declare an Enumeration with associated values like this: </p>
-<pre class="highlight swift"><code><span class="c1">// Error: enum with raw type cannot have cases with arguments</span>
+<pre class="highlight swift"><code><span class="c1">// ❌ Error: enum with raw type cannot have cases with arguments</span>
 <span class="kd">enum</span> <span class="kt">GithubAPIClient</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
     <span class="k">case</span> <span class="n">zen</span>
     <span class="k">case</span> <span class="nf">user</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
@@ -367,7 +432,7 @@
 </code></pre>
 
 <p>Full example <a href="https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift">GithubAPIClient.swift</a></p>
-<h4 id='usage' class='heading'>Usage</h4>
+<h3 id='usage' class='heading'>Usage</h3>
 <pre class="highlight swift"><code><span class="nf">print</span><span class="p">(</span><span class="kt">GithubAPIClient</span><span class="o">.</span><span class="n">zen</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span> <span class="c1">// zen</span>
 <span class="nf">print</span><span class="p">(</span><span class="kt">GithubAPIClient</span><span class="o">.</span><span class="nf">user</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"sventiigi"</span><span class="p">)</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span> <span class="c1">// user</span>
 </code></pre>

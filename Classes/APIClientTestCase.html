@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SwiftEnv Extension Reference</title>
+    <title>APIClientTestCase Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/SwiftEnv" class="dashAnchor"></a>
-    <a title="SwiftEnv Extension Reference"></a>
+    <a name="//apple_ref/swift/Class/APIClientTestCase" class="dashAnchor"></a>
+    <a title="APIClientTestCase Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">PerfectAPIClient Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">PerfectAPIClient Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SwiftEnv Extension Reference
+        APIClientTestCase Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -76,14 +76,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>SwiftEnv</h1>
+            <h1>APIClientTestCase</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">class</span> <span class="kt">SwiftEnv</span></code></pre>
+                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">APIClientTestCase</span><span class="p">:</span> <span class="kt">XCTestCase</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Base APIClientTestCase for unit testing APIClient</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -91,9 +92,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8SwiftEnvAAC16PerfectAPIClientE27apiClientUnitTestIdentifier33_76FA077521B37DA8E96C02290DB23625LLSSvZ"></a>
-                    <a name="//apple_ref/swift/Variable/apiClientUnitTestIdentifier" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8SwiftEnvAAC16PerfectAPIClientE27apiClientUnitTestIdentifier33_76FA077521B37DA8E96C02290DB23625LLSSvZ">apiClientUnitTestIdentifier</a>
+                    <a name="/c:@M@PerfectAPIClient@objc(cs)APIClientTestCase(im)setUp"></a>
+                    <a name="//apple_ref/swift/Method/setUp()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PerfectAPIClient@objc(cs)APIClientTestCase(im)setUp">setUp()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -101,14 +102,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The PerfectAPIClient unit tests environment variable identifier</p>
+                        <p>Setup method called before the invocation of each test method in the class.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">apiClientUnitTestIdentifier</span> <span class="o">=</span> <span class="s">"PerfectAPIClientUnitTestCase"</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">setUp</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -118,9 +119,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8SwiftEnvAAC16PerfectAPIClientE09isRunningD9UnitTestsSbvZ"></a>
-                    <a name="//apple_ref/swift/Variable/isRunningAPIClientUnitTests" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8SwiftEnvAAC16PerfectAPIClientE09isRunningD9UnitTestsSbvZ">isRunningAPIClientUnitTests</a>
+                    <a name="/c:@M@PerfectAPIClient@objc(cs)APIClientTestCase(im)tearDown"></a>
+                    <a name="//apple_ref/swift/Method/tearDown()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PerfectAPIClient@objc(cs)APIClientTestCase(im)tearDown">tearDown()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -128,14 +129,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Idenfity if the current runtime for PerfectAPIClient is under unit test conditions</p>
+                        <p>Teardown method called after the invocation of each test method in the class.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">isRunningAPIClientUnitTests</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">tearDown</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
