@@ -195,7 +195,8 @@ fileprivate extension APIClient {
     ///   - url: The request url
     ///   - options: The request options
     ///   - requestCompletion: The request completion closure after result has been retrieved
-    func performRequest(url: String, options: [CURLRequest.Option], requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
+    func performRequest(url: String, options: [CURLRequest.Option],
+                        requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
         // Check if a mockedResponseResult object is available and runtime is under unit test conditions
         if let mockedResponseResult = self.mockResponseResult, SwiftEnv.isRunningAPIClientUnitTests {
             // Invoke requestCompletion with mockedResponseResult
