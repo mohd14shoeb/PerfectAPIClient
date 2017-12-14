@@ -75,6 +75,8 @@ enum GithubAPIClient {
     case zen
     /// Retrieve user info for given username
     case user(name: String)
+    /// Retrieve repositories for user name
+    case repositories(userName: String)
 }
 ```
 Next up we implement the `APIClient` protocol to define the request information like base url, endpoint path, HTTP header, etc...
@@ -96,6 +98,8 @@ extension GithubAPIClient: APIClient {
             return "zen"
         case .user(name: let name):
             return "users/\(name)"
+        case .repositories(userName: let name):
+            return "users/\(name)/repos"
         }
     }
     
@@ -105,6 +109,8 @@ extension GithubAPIClient: APIClient {
         case .zen:
             return .get
         case .user:
+            return .get
+        case .repositories:
             return .get
         }
     }
@@ -157,6 +163,7 @@ GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
         print(response.getHTTPHeader(field: "Content-Type")) // HTTP header field
         print(response.getPayloadJSON) // The payload as JSON/Dictionary
         print(response.getMappablePayload(type: SomethingMappable.self)) // Map payload into an object
+        print(response.getMappablePayloadArray(SomethingMappable.self)) // JSON Array
     }, failure: { (error: Error) in
         // Oh boy you are in trouble 😨
     }
@@ -172,6 +179,19 @@ GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: 
         print(user.name) // Sven Tiigi
     }, failure: { (error: Error) in
         // Oh boy you are in trouble again 😱
+    }
+}
+```
+
+If your response contains an `JSON Array`:
+
+```swift
+GithubAPIClient.repositories(username: "sventiigi").request(mappable: Repository.self) { (result: APIClientResult<[Repository]>) in
+    result.analysis(success: { (repositories: [Repository]) in
+        // Do awesome stuff with the repositories
+        print(repositories.count)
+    }, failure: { (error: Error) in
+        // 🙈
     }
 }
 ```
@@ -220,6 +240,15 @@ By overriding the `modify(responseJSON ...)` function you can update the respons
 public func modify(responseJSON: inout [String: Any], mappable: BaseMappable.Type) {
     // Try to retrieve JSON from result property
     responseJSON = responseJSON["result"] as? [String: Any] ?? responseJSON
+}
+```
+
+### Modify JSON Array before Mapping
+By overriding the `modify(responseJSONArray ...)` function you can update the response JSON Array before it's being mapped to an mappable array.
+
+```swift
+public func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappable.Type) {
+    // Manipulate the responseJSONArray if you need so
 }
 ```
 
