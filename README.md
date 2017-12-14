@@ -11,6 +11,9 @@
 	<a href="https://codecov.io/gh/SvenTiigi/PerfectAPIClient" target="_blank">
 		<img src="https://img.shields.io/codecov/c/github/SvenTiigi/PerfectAPIClient.svg" alt="Coverage">
 	</a>
+	<a href="https://codebeat.co/projects/github-com-sventiigi-perfectapiclient-master">
+		<img alt="codebeat badge" src="https://codebeat.co/badges/85818a0c-1056-4f28-8348-f61ead493c81" />
+	</a>
 	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
 		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
 	</a>
