@@ -118,13 +118,8 @@ extension GithubAPIClient: APIClient {
         }
     }
     
-    /// The authentication HTTP headers
-    var authenticationHeaders: [String : String]? {
-        return nil
-    }
-    
-    /// The HTTP headers for a specific endpoint
-    var headers: [String : String]? {
+    /// The HTTP headers
+    var headers: [HTTPRequestHeader.Name: String]? {
         return ["User-Agent": "PerfectAPIClient"]
     }
     
@@ -142,7 +137,8 @@ extension GithubAPIClient: APIClient {
     var mockResponseResult: APIClientResult<APIClientResponse>? {
         switch self {
         case .zen:
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
+            let request = APIClientRequest(apiClient: self)
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend", request: request)
             return .success(response)
         default:
             return nil
@@ -232,7 +228,7 @@ By overriding the `modify(requestURL ...)` function you can update the construct
 
 ```swift
 public func modify(requestURL: inout String) {
-    requestURL += "&token=42"
+    requestURL += "?token=42"
 }
 ```
 
@@ -255,6 +251,15 @@ public func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappa
 }
 ```
 
+### Should fail on bad response status
+By overriding the `shouldFailOnBadResponseStatus()` function you can decide if the `APIClient` should evaluate the result as a failure if the response status code is`>= 300` and `< 200`. The default implementation returns `true` which results that an response with an bad response status code will lead to an `APIClientResult` of type `failure`.
+
+```swift
+public func shouldFailOnBadResponseStatus() -> Bool {
+    return true
+}
+```
+
 ## Logging
 By overrding the following two functions you can add logging to your request before the request started and when a response is retrieved or something else you might want to do.
 
@@ -262,8 +267,8 @@ By overrding the following two functions you can add logging to your request bef
 By overriding the `willPerformRequest` function you can perform logging operation or something else your might want to do, before the request of an `APIClient` will be executed.
 
 ```swift
-func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-    print("Will perform request \(url) with options: \(options)")
+func willPerformRequest(request: APIClientRequest) {
+    print("Will perform request \(request)")
 }
 ```
 
@@ -271,8 +276,8 @@ func willPerformRequest(url: String, options: [CURLRequest.Option]) {
 By overriding the `didRetrieveResponse` function you can perform logging operation or something else your might want to do, after the response of an request for an `APIClient` is being retrieved.
 
 ```swift
-func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
-    print("Did retrieve response for request \(url) with options: \(options) and result: \(result)")
+func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIClientResponse>) {
+    print("Did retrieve response for request: \(request) and result: \(result)")
 }
 ```
 
