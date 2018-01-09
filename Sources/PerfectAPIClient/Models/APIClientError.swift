@@ -14,4 +14,19 @@ public enum APIClientError: Error {
         reason: String,
         response: APIClientResponse
     )
+    /// The connection failed
+    case connectionFailed(
+        error: Error,
+        request: APIClientRequest
+    )
+    
+    /// The localized APIClientError Description
+    public var localizedDescription: String {
+        switch self {
+        case .failed(reason: let reason, response: let response):
+            return "\(reason) | Response: \(response)"
+        case .connectionFailed(error: let error, request: let request):
+            return "\(error.localizedDescription) | Request: \(request)"
+        }
+    }
 }
