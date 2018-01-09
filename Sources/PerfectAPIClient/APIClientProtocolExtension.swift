@@ -99,7 +99,7 @@ public extension APIClient {
                 }
                 // Mapping succeded complete with success
                 completion(.success(mappedResponse))
-            }, failure: { (error: Error) in
+            }, failure: { (error: APIClientError) in
                 // Complete with error
                 completion(.failure(error))
             })
@@ -144,7 +144,7 @@ public extension APIClient {
                 }
                 // Mapping succeded complete with success
                 completion(.success(mappedResponseArray))
-            }, failure: { (error: Error) in
+            }, failure: { (error: APIClientError) in
                 // Complete with error
                 completion(.failure(error))
             })
@@ -231,7 +231,8 @@ fileprivate extension APIClient {
                 requestCompletion(result)
             } catch {
                 // Invoke requestCompletion with failure and error
-                requestCompletion(.failure(error))
+                let connectionError = APIClientError.connectionFailed(error: error, request: request)
+                requestCompletion(.failure(connectionError))
             }
         }
     }

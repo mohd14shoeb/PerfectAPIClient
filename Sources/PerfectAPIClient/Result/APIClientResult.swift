@@ -15,14 +15,14 @@ public enum APIClientResult<Value> {
     case success(Value)
     
     /// Failure with error as associated value
-    case failure(Error)
+    case failure(APIClientError)
     
     /// Perform result analysis with success and failure closure
     ///
     /// - Parameters:
     ///   - success: The success closure
     ///   - failure: The failure closure
-    public func analysis(success: ((Value) -> Void)?, failure: ((Error) -> Void)?) {
+    public func analysis(success: ((Value) -> Void)?, failure: ((APIClientError) -> Void)?) {
         // Switch on self
         switch self {
         case .success(let value):

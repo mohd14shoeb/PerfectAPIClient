@@ -77,7 +77,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                 result.analysis(success: { (response: APIClientResponse) in
                     XCTAssertEqual(response.payload, "Some zen for you my friend")
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             }
@@ -105,7 +105,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                         return
                     }
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             })
@@ -121,7 +121,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                         return
                     }
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             })
@@ -139,7 +139,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                     XCTAssertEqual(user.name, "Sven Tiigi")
                     XCTAssertEqual(user.type, "user")
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             }
@@ -157,7 +157,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                     XCTAssertEqual(repository.name, "PerfectAPIClient")
                     XCTAssertEqual(repository.fullName, "SvenTiigi/PerfectAPIClient")
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             })
@@ -169,7 +169,7 @@ class PerfectAPIClientTests: APIClientTestCase {
             GithubAPIClient.repositories(userName: "sventiigi").request(mappable: User.self, completion: { (result: APIClientResult<[User]>) in
                 result.analysis(success: { (users: [User]) in
                     XCTFail("Endpoint shouldn't be mappable to type User array")
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     expectation.fulfill()
                 })
             })
@@ -190,7 +190,7 @@ class PerfectAPIClientTests: APIClientTestCase {
                     }
                     XCTAssertEqual(post, responsePost)
                     expectation.fulfill()
-                }, failure: { (error: Error) in
+                }, failure: { (error: APIClientError) in
                     XCTFail(error.localizedDescription)
                 })
             }
