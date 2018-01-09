@@ -163,7 +163,7 @@ GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
         print(response.getPayloadJSON) // The payload as JSON/Dictionary
         print(response.getMappablePayload(type: SomethingMappable.self)) // Map payload into an object
         print(response.getMappablePayloadArray(SomethingMappable.self)) // JSON Array
-    }, failure: { (error: Error) in
+    }, failure: { (error: APIClientError) in
         // Oh boy you are in trouble 😨
     }
 }
@@ -176,7 +176,7 @@ GithubAPIClient.user(name: "sventiigi").request(mappable: User.self) { (result: 
     result.analysis(success: { (user: User) in
         // Do awesome stuff with the user
         print(user.name) // Sven Tiigi
-    }, failure: { (error: Error) in
+    }, failure: { (error: APIClientError) in
         // Oh boy you are in trouble again 😱
     }
 }
@@ -189,7 +189,7 @@ GithubAPIClient.repositories(username: "sventiigi").request(mappable: Repository
     result.analysis(success: { (repositories: [Repository]) in
         // Do awesome stuff with the repositories
         print(repositories.count)
-    }, failure: { (error: Error) in
+    }, failure: { (error: APIClientError) in
         // 🙈
     }
 }
