@@ -21,11 +21,8 @@ public protocol APIClient {
     /// The HTTP method
     var method: HTTPMethod { get }
     
-    /// The authentication HTTP headers
-    var authenticationHeaders: [String: String]? { get }
-    
     /// The HTTP headers
-    var headers: [String: String]? { get }
+    var headers: [HTTPRequestHeader.Name: String]? { get }
     
     /// The request payload as BaseMappable
     var requestPayload: BaseMappable? { get }
@@ -79,19 +76,21 @@ public protocol APIClient {
     ///   - mappable: The mappable object type that should be mapped to
     func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappable.Type)
     
+    /// Indicating if the APIClient should return an error
+    /// On a bad response code >= 300 and < 200
+    func shouldFailOnBadResponseStatus() -> Bool
+    
     /// Will perform request to API endpoint
     ///
     /// - Parameters:
-    ///   - url: The request url
-    ///   - options: The supplied request options
-    func willPerformRequest(url: String, options: [CURLRequest.Option])
+    ///   - request: The APIClientRequest
+    func willPerformRequest(request: APIClientRequest)
     
     /// Did retrieve response after request has initiated
     ///
     /// - Parameters:
-    ///   - url: The request url
-    ///   - options: The supplied request options
+    ///   - request: The APIClientRequest
     ///   - result: The APIClientResult
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>)
+    func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIClientResponse>)
     
 }

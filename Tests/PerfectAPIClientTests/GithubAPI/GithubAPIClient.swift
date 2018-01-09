@@ -52,13 +52,8 @@ extension GithubAPIClient: APIClient {
         }
     }
     
-    var authenticationHeaders: [String : String]? {
-        // No authentication headers needed
-        return nil
-    }
-    
-    var headers: [String : String]? {
-        return ["User-Agent": "PerfectAPIClient"]
+    var headers: [HTTPRequestHeader.Name: String]? {
+        return [.userAgent: "PerfectAPIClient"]
     }
     
     var requestPayload: BaseMappable? {
@@ -72,34 +67,35 @@ extension GithubAPIClient: APIClient {
     }
     
     var mockResponseResult: APIClientResult<APIClientResponse>? {
+        let request = APIClientRequest(apiClient: self)
         switch self {
         case .zen:
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend")
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend", request: request)
             return .success(response)
         case .user:
             guard let userJSON = User(name: "Sven Tiigi", type: "user").toJSONString() else {
-                return .failure("Unable to setup mock data for user endpoint")
+                return nil
             }
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: userJSON)
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: userJSON, request: request)
             return .success(response)
         case .repositories:
             var repository = Repository()
             repository.name = "PerfectAPIClient"
             repository.fullName = "SvenTiigi/PerfectAPIClient"
             guard let repositoriesJSON = [repository].toJSONString() else {
-                return .failure("Unable to setup mock data for repositories endpoint")
+                return nil
             }
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: repositoriesJSON)
+            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: repositoriesJSON, request: request)
             return .success(response)
         }
     }
     
-    func willPerformRequest(url: String, options: [CURLRequest.Option]) {
-        print("Github API Client \(self.rawValue) will perform request \(url) with options: \(options)")
+    func willPerformRequest(request: APIClientRequest) {
+        print("Github API Client \(self.rawValue) will perform request \(request)")
     }
     
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {
-        print("Github API Client \(self.rawValue) did retrieve response for request \(url) with options: \(options) and result: \(result)")
+    func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIClientResponse>) {
+        print("Github API Client \(self.rawValue) did retrieve response for request: \(request) and result: \(result)")
     }
     
 }

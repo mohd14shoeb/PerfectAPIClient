@@ -5,6 +5,7 @@
 //  Created by Sven Tiigi on 02.11.17.
 //
 
+import Foundation
 import XCTest
 import SwiftEnv
 

@@ -45,32 +45,14 @@ public extension APIClient {
     ///
     /// - Parameter completion: completion closure with APIClientResult
     func request(completion: ((APIClientResult<APIClientResponse>) -> Void)?) {
-        // Get URL
-        let url = self.getRequestURL()
-        // Setup CURL Options with default options
-        var options: [CURLRequest.Option] = [.httpMethod(self.method)]
-        // Check if additional options are available
-        if let apiOptions = self.options {
-            // Append apiOptions
-            options.append(contentsOf: apiOptions)
-        }
-        // Check if a request payload object is available
-        if let payloadString = self.requestPayload?.toJSONString() {
-            // Append payload as json encoded string
-            options.append(.postString(payloadString))
-            // Append HTTP header content type JSON
-            options.append(.addHeader(.contentType, "application/json"))
-        }
-        // Add authentication HTTP Headers
-        options.add(httpHeaders: self.authenticationHeaders)
-        // Add HTTP Headers
-        options.add(httpHeaders: self.headers)
+        // Initialize APIClientRequest for APIClient
+        let request = APIClientRequest(apiClient: self)
         // Invoke will perform request
-        self.willPerformRequest(url: url, options: options)
+        self.willPerformRequest(request: request)
         // Perform API request with url and options and handle requestCompletion result
-        self.performRequest(url: url, options: options) { (result: APIClientResult<APIClientResponse>) in
+        self.performRequest(request) { (result: APIClientResult<APIClientResponse>) in
             // Invoke didRetrieveResponse with result
-            self.didRetrieveResponse(url: url, options: options, result: result)
+            self.didRetrieveResponse(request: request, result: result)
             // Unwrap completion clousre
             guard let completion = completion else {
                 // No completion closure return out of function
@@ -94,7 +76,11 @@ public extension APIClient {
                 // Unwrap payload JSON
                 guard var json = response.getPayloadJSON() else {
                     // Payload isn't a valid JSON
-                    completion(.failure("Response payload isn't a valid JSON"))
+                    let error = APIClientError.failed(
+                        reason: "Response payload isn't a valid JSON",
+                        response: response
+                    )
+                    completion(.failure(error))
                     // Return out of function
                     return
                 }
@@ -103,7 +89,11 @@ public extension APIClient {
                 // Try to map response via mapped response type
                 guard let mappedResponse = Mapper<T>().map(JSON: json) else {
                     // Unable to map response
-                    completion(.failure("Unable to map response for type: \(mappable)"))
+                    let error = APIClientError.failed(
+                        reason: "Unable to map response for type: \(mappable)",
+                        response: response
+                    )
+                    completion(.failure(error))
                     // Return out of function
                     return
                 }
@@ -129,7 +119,11 @@ public extension APIClient {
                 // Unwrap payload JSON
                 guard var jsonArray = response.getPayloadJSONArray() else {
                     // Payload isn't a valid JSON
-                    completion(.failure("Response payload isn't a valid JSON Array"))
+                    let error = APIClientError.failed(
+                        reason: "Response payload isn't a valid JSON Array",
+                        response: response
+                    )
+                    completion(.failure(error))
                     // Return out of function
                     return
                 }
@@ -140,7 +134,11 @@ public extension APIClient {
                 // Check if ObjectMapper mapped the json array to given type
                 if jsonArray.count != mappedResponseArray.count {
                     // Unable to map response
-                    completion(.failure("Unable to map response array for type: \(mappable)"))
+                    let error = APIClientError.failed(
+                        reason: "Unable to map response array for type: \(mappable)",
+                        response: response
+                    )
+                    completion(.failure(error))
                     // Return out of function
                     return
                 }
@@ -167,20 +165,25 @@ public extension APIClient {
     ///   - mappable: The mappable object type that should be mapped to
     func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappable.Type) {}
     
+    /// Indicating if the APIClient should return an error
+    /// On a bad response code >= 300 and < 200
+    func shouldFailOnBadResponseStatus() -> Bool {
+        // Default implementation return true
+        return true
+    }
+    
     /// Will perform request to API endpoint
     ///
     /// - Parameters:
-    ///   - url: The request url
-    ///   - options: The supplied request options
-    func willPerformRequest(url: String, options: [CURLRequest.Option]) {}
+    ///   - request: The APIClientRequest
+    func willPerformRequest(request: APIClientRequest) {}
     
     /// Did retrieve response after request has initiated
     ///
     /// - Parameters:
-    ///   - url: The request url
-    ///   - options: The supplied request options
+    ///   - request: The APIClientRequest
     ///   - result: The APIClientResult
-    func didRetrieveResponse(url: String, options: [CURLRequest.Option], result: APIClientResult<APIClientResponse>) {}
+    func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIClientResponse>) {}
     
 }
 
@@ -195,8 +198,7 @@ fileprivate extension APIClient {
     ///   - url: The request url
     ///   - options: The request options
     ///   - requestCompletion: The request completion closure after result has been retrieved
-    func performRequest(url: String, options: [CURLRequest.Option],
-                        requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
+    func performRequest(_ request: APIClientRequest, requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
         // Check if a mockedResponseResult object is available and runtime is under unit test conditions
         if let mockedResponseResult = self.mockResponseResult, SwiftEnv.isRunningAPIClientUnitTests {
             // Invoke requestCompletion with mockedResponseResult
@@ -205,14 +207,26 @@ fileprivate extension APIClient {
             return
         }
         // Perform network request for url and options
-        CURLRequest(url, options: options).perform { (curlResponse: () throws -> CURLResponse) in
+        CURLRequest(request.url, options: request.options).perform { (curlResponse: () throws -> CURLResponse) in
             do {
                 // Try to retrieve CURLResponse and construct APIClientResponse
-                let response = APIClientResponse(curlResponse: try curlResponse())
-                // Declare result
-                let result: APIClientResult<APIClientResponse>
-                // Initialize result by evaluating response HTTP status code
-                result = response.isSuccessful ? .success(response) : .failure(response)
+                let response = APIClientResponse(
+                    request: request,
+                    curlResponse: try curlResponse()
+                )
+                // Initialize result with success and response
+                var result: APIClientResult<APIClientResponse> = .success(response)
+                // Check if APIClient should fail on bad response status
+                // and response isn't successful
+                if self.shouldFailOnBadResponseStatus() && !response.isSuccessful {
+                    // Initialize APIClientError
+                    let error = APIClientError.failed(
+                        reason: "Retrieved bad response code: \(response.status.code)",
+                        response: response
+                    )
+                    // Override result with failure
+                    result = .failure(error)
+                }
                 // Invoke request completion with result
                 requestCompletion(result)
             } catch {

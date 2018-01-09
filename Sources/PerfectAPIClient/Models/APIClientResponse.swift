@@ -11,9 +11,9 @@ import PerfectHTTP
 import ObjectMapper
 
 /// APIClientResponse represents an API response
-public struct APIClientResponse: Error {
+public struct APIClientResponse {
     
-    /// The request url
+    /// The url that has been requested
     public let url: String
     
     /// The response status
@@ -22,10 +22,8 @@ public struct APIClientResponse: Error {
     /// The payload
     public var payload: String
     
-    /// The localized description for an error
-    public var localizedDescription: String {
-        return "APIClientResponse retrieved bad response code: \(self.status.code) => \(self)"
-    }
+    /// The request
+    public var request: APIClientRequest
     
     /// Indicating if the response is successful (Status code: 200 - 299)
     public var isSuccessful: Bool {
@@ -35,7 +33,7 @@ public struct APIClientResponse: Error {
     /// The curlResponse
     private var curlResponse: CURLResponse?
     
-    /// The response HTTP headers
+    /// The response HTTP headers set via initializer
     private var headers: [String: String]?
     
     /// Initializer to construct custom APIClientResponse
@@ -45,35 +43,39 @@ public struct APIClientResponse: Error {
     ///   - status: The response status
     ///   - headers: The response HTTP header fields
     ///   - payload: The response payload
-    public init(url: String, status: HTTPResponseStatus, payload: String, headers: [String: String]? = nil) {
+    public init(url: String, status: HTTPResponseStatus, payload: String, request: APIClientRequest, headers: [String: String]? = nil) {
         self.url = url
         self.status = status
         self.payload = payload
+        self.request = request
         self.headers = headers
     }
     
     /// Intitializer with CURLResponse
     ///
     /// - Parameter curlResponse: The CURLResponse
-    public init(curlResponse: CURLResponse) {
-        self.url = curlResponse.url
-        self.status = HTTPResponseStatus.statusFrom(code: curlResponse.responseCode)
-        self.payload = curlResponse.bodyString
+    public init(request: APIClientRequest, curlResponse: CURLResponse) {
+        self.init(
+            url: curlResponse.url,
+            status: HTTPResponseStatus.statusFrom(code: curlResponse.responseCode),
+            payload: curlResponse.bodyString,
+            request: request
+        )
         self.curlResponse = curlResponse
     }
     
     /// Get response HTTP header field
     ///
-    /// - Parameter field: The HTTP header field
+    /// - Parameter name: The HTTP header response name
     /// - Returns: The HTTP header field value
-    public func getHTTPHeader(field: String) -> String? {
+    public func getHTTPHeader(name: HTTPResponseHeader.Name) -> String? {
         // Check if headers are available by direct initialization
         if let headers = self.headers {
             // Return HTTP header field
-            return headers[field]
+            return headers[name.standardName]
         } else if let curlResponse = self.curlResponse {
             // Return HTTP header field from CURLResponse
-            return curlResponse.get(CURLResponse.Header.Name.custom(name: field))
+            return curlResponse.get(name)
         } else {
             // Unable to return HTTP header field
             return nil
@@ -143,31 +145,17 @@ public struct APIClientResponse: Error {
 
 // MARK: CustomStringConvertible Extension
 
-extension APIClientResponse: CustomStringConvertible {
+extension APIClientResponse: JSONCustomStringConvertible {
     
-    /// A textual representation of this APIClientResponse instance.
-    public var description: String {
-        // Initialize empty JSON string
-        let emptyJSON = "{}"
-        // Initialize responseJSON description
-        let responseJSON: [String: Any] = [
+    /// A JSON representation of this instance
+    public var json: [String : Any] {
+        return [
             "url": self.url,
             "status": self.status.description,
             "payload": self.payload,
+            "request": self.request.description,
             "isSuccessful": self.isSuccessful
         ]
-        // Try to construct JSON data from response JSON
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: responseJSON, options: [.prettyPrinted]) else {
-            // JSONSerialization failed return empty JSON string
-            return emptyJSON
-        }
-        // Try to construct a String from jsonData with UTF-8 encoding
-        guard let json = String(data: jsonData, encoding: .utf8) else {
-            // Return empty JSON string
-            return emptyJSON
-        }
-        // Return the response JSON description as String
-        return json
     }
     
 }

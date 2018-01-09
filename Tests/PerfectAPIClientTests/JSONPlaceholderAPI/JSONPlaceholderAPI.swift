@@ -43,13 +43,8 @@ extension JSONPlaceholderAPIClient: APIClient {
             return .get
         }
     }
-    
-    var authenticationHeaders: [String : String]? {
-        // No authentication headers needed
-        return nil
-    }
-    
-    var headers: [String : String]? {
+
+    var headers: [HTTPRequestHeader.Name : String]? {
         // No headers needed
         return nil
     }
