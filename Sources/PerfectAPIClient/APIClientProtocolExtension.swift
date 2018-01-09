@@ -76,7 +76,7 @@ public extension APIClient {
                 // Unwrap payload JSON
                 guard var json = response.getPayloadJSON() else {
                     // Payload isn't a valid JSON
-                    let error = APIClientError.failed(
+                    let error = APIClientError.mappingFailed(
                         reason: "Response payload isn't a valid JSON",
                         response: response
                     )
@@ -89,7 +89,7 @@ public extension APIClient {
                 // Try to map response via mapped response type
                 guard let mappedResponse = Mapper<T>().map(JSON: json) else {
                     // Unable to map response
-                    let error = APIClientError.failed(
+                    let error = APIClientError.mappingFailed(
                         reason: "Unable to map response for type: \(mappable)",
                         response: response
                     )
@@ -119,7 +119,7 @@ public extension APIClient {
                 // Unwrap payload JSON
                 guard var jsonArray = response.getPayloadJSONArray() else {
                     // Payload isn't a valid JSON
-                    let error = APIClientError.failed(
+                    let error = APIClientError.mappingFailed(
                         reason: "Response payload isn't a valid JSON Array",
                         response: response
                     )
@@ -134,7 +134,7 @@ public extension APIClient {
                 // Check if ObjectMapper mapped the json array to given type
                 if jsonArray.count != mappedResponseArray.count {
                     // Unable to map response
-                    let error = APIClientError.failed(
+                    let error = APIClientError.mappingFailed(
                         reason: "Unable to map response array for type: \(mappable)",
                         response: response
                     )
@@ -220,10 +220,7 @@ fileprivate extension APIClient {
                 // and response isn't successful
                 if self.shouldFailOnBadResponseStatus() && !response.isSuccessful {
                     // Initialize APIClientError
-                    let error = APIClientError.failed(
-                        reason: "Retrieved bad response code: \(response.status.code)",
-                        response: response
-                    )
+                    let error = APIClientError.badResponseStatus(response: response)
                     // Override result with failure
                     result = .failure(error)
                 }
