@@ -120,7 +120,7 @@ extension GithubAPIClient: APIClient {
     
     /// The HTTP headers
     var headers: [HTTPRequestHeader.Name: String]? {
-        return ["User-Agent": "PerfectAPIClient"]
+        return [.userAgent: "PerfectAPIClient"]
     }
     
     /// The request payload for a POST or PUT request
