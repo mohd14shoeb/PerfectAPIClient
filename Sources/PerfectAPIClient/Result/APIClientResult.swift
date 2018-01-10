@@ -17,12 +17,18 @@ public enum APIClientResult<Value> {
     /// Failure with error as associated value
     case failure(APIClientError)
     
+}
+
+// MARK: Analysis Extension
+
+public extension APIClientResult {
+    
     /// Perform result analysis with success and failure closure
     ///
     /// - Parameters:
     ///   - success: The success closure
     ///   - failure: The failure closure
-    public func analysis(success: ((Value) -> Void)?, failure: ((APIClientError) -> Void)?) {
+    func analysis(success: ((Value) -> Void)?, failure: ((APIClientError) -> Void)?) {
         // Switch on self
         switch self {
         case .success(let value):

@@ -32,7 +32,8 @@ public struct APIClientRequest {
     ///   - method: The HTTP method
     ///   - options: The request options
     ///   - payload: The optional payload
-    public init(url: String, method: HTTPMethod, options: [CURLRequest.Option], payload: BaseMappable? = nil) {
+    public init(url: String, method: HTTPMethod,
+                options: [CURLRequest.Option], payload: BaseMappable? = nil) {
         self.url = url
         self.method = method
         self.options = options
@@ -62,7 +63,7 @@ public struct APIClientRequest {
         // Unwrap HTTP Headers
         if let headers = apiClient.headers {
             // Add HTTP Headers
-            options.append(.addHeaders(headers.map{ ($0, $1) }))
+            options.append(.addHeaders(headers.map {($0, $1)}))
         }
         // Initialize
         self.init(
@@ -80,11 +81,11 @@ public struct APIClientRequest {
 extension APIClientRequest: JSONCustomStringConvertible {
     
     /// A JSON representation of this instance
-    public var json: [String : Any] {
+    public var json: [String: Any] {
         var requestJSON: [String: Any] = [
             "url": self.url,
             "method": self.method.description,
-            "options": self.options.map({"\($0)"}),
+            "options": self.options.map { "\($0)" }
         ]
         if let payloadJSON = self.payload?.toJSONString(prettyPrint: true) {
             requestJSON["payload"] = payloadJSON

@@ -8,7 +8,6 @@
 import PerfectHTTP
 import PerfectCURL
 import ObjectMapper
-import SwiftEnv
 
 // MARK: Default implementation
 
@@ -187,7 +186,7 @@ public extension APIClient {
     
 }
 
-// MARK: Perform Request
+// MARK: Perform Request Extension
 
 fileprivate extension APIClient {
     
@@ -198,9 +197,10 @@ fileprivate extension APIClient {
     ///   - url: The request url
     ///   - options: The request options
     ///   - requestCompletion: The request completion closure after result has been retrieved
-    func performRequest(_ request: APIClientRequest, requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
-        // Check if a mockedResponseResult object is available and runtime is under unit test conditions
-        if let mockedResponseResult = self.mockResponseResult, SwiftEnv.isRunningAPIClientUnitTests {
+    func performRequest(_ request: APIClientRequest,
+                        requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
+        // Check if a mockedResponseResult object is available and environment is under unit test conditions
+        if let mockedResponseResult = self.mockResponseResult, APIClientEnvironment.shared.isMode(.test) {
             // Invoke requestCompletion with mockedResponseResult
             requestCompletion(mockedResponseResult)
             // Return out of function
@@ -228,7 +228,10 @@ fileprivate extension APIClient {
                 requestCompletion(result)
             } catch {
                 // Invoke requestCompletion with failure and error
-                let connectionError = APIClientError.connectionFailed(error: error, request: request)
+                let connectionError = APIClientError.connectionFailed(
+                    error: error,
+                    request: request
+                )
                 requestCompletion(.failure(connectionError))
             }
         }

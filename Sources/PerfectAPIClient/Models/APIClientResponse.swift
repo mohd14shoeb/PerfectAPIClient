@@ -43,7 +43,8 @@ public struct APIClientResponse {
     ///   - status: The response status
     ///   - headers: The response HTTP header fields
     ///   - payload: The response payload
-    public init(url: String, status: HTTPResponseStatus, payload: String, request: APIClientRequest, headers: [String: String]? = nil) {
+    public init(url: String, status: HTTPResponseStatus, payload: String,
+                request: APIClientRequest, headers: [String: String]? = nil) {
         self.url = url
         self.status = status
         self.payload = payload
@@ -148,7 +149,7 @@ public struct APIClientResponse {
 extension APIClientResponse: JSONCustomStringConvertible {
     
     /// A JSON representation of this instance
-    public var json: [String : Any] {
+    public var json: [String: Any] {
         return [
             "url": self.url,
             "status": self.status.description,

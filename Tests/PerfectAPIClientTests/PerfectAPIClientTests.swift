@@ -6,10 +6,9 @@
 //
 
 import XCTest
-import SwiftEnv
 @testable import PerfectAPIClient
 
-class PerfectAPIClientTests: APIClientTestCase {
+class PerfectAPIClientTests: XCTestCase {
     
     // MARK: Properties
     
@@ -18,7 +17,7 @@ class PerfectAPIClientTests: APIClientTestCase {
     
     /// All tests
     static var allTests = [
-        ("testSwiftEnvUnitTestExtension", testSwiftEnvUnitTestExtension),
+        ("testAPIClientEnvironmentModeIsTest", testAPIClientEnvironmentModeIsTest),
         ("testGithubZenEndpoint", testGithubZenEndpoint),
         ("testGithubZenEndpointWithInvalidMappable", testGithubZenEndpointWithInvalidMappable),
         ("testGithubZenEndpointWithInvalidResponseMappable", testGithubZenEndpointWithInvalidResponseMappable),
@@ -32,11 +31,22 @@ class PerfectAPIClientTests: APIClientTestCase {
     
     // MARK: Setup
     
-    /// Setup method called before the invocation of each test method in the class.
+    /// Setup function called before the invocation of each test function
     override func setUp() {
         super.setUp()
+        // Enable Test Environment
+        APIClientEnvironment.shared.mode = .test
         // Disable continute after failure
         self.continueAfterFailure = false
+    }
+    
+    // MARK: TearDown
+    
+    /// TearDown function called after the invocation of each test function
+    override func tearDown() {
+        super.tearDown()
+        // Reset Environment
+        APIClientEnvironment.shared.mode = .standard
     }
     
     // MARK: Private test helper function
@@ -62,11 +72,11 @@ class PerfectAPIClientTests: APIClientTestCase {
         return Post(title: "Mr.Robot loves PerfectAPIClient", body: "Awesome body description")
     }
     
-    // MARK: Extension Tests
+    // MARK: Environment Test
     
-    /// Test SwiftEnv UnitTest static property extension
-    func testSwiftEnvUnitTestExtension() {
-        XCTAssert(SwiftEnv.isRunningAPIClientUnitTests)
+    /// Test APIClientEnvironment
+    func testAPIClientEnvironmentModeIsTest() {
+        XCTAssert(APIClientEnvironment.shared.isMode(.test))
     }
     
     // MARK: Github Tests [Mocked]
@@ -89,8 +99,12 @@ class PerfectAPIClientTests: APIClientTestCase {
             GithubAPIClient.zen.request(mappable: User.self) { (result: APIClientResult<User>) in
                 result.analysis(success: { (_) in
                     XCTFail("Zen request shouldn't be mappable to User")
-                }, failure: { (_) in
-                    expectation.fulfill()
+                }, failure: { (error: APIClientError) in
+                    if case .mappingFailed = error {
+                        expectation.fulfill()
+                    } else {
+                        XCTFail("Error should be of type mapping failed")
+                    }
                 })
             }
         }
@@ -170,7 +184,11 @@ class PerfectAPIClientTests: APIClientTestCase {
                 result.analysis(success: { (users: [User]) in
                     XCTFail("Endpoint shouldn't be mappable to type User array")
                 }, failure: { (error: APIClientError) in
-                    expectation.fulfill()
+                    if case .mappingFailed = error {
+                        expectation.fulfill()
+                    } else {
+                        XCTFail("Error should be of type mapping failed")
+                    }
                 })
             })
         }
@@ -203,8 +221,12 @@ class PerfectAPIClientTests: APIClientTestCase {
             JSONPlaceholderAPIClient.createPost(post).request(mappable: User.self, completion: { (result: APIClientResult<User>) in
                 result.analysis(success: { (user: User) in
                     XCTFail("JSONPlaceholderAPI createPost shouldn't be mappable to user")
-                }, failure: { (_) in
-                    expectation.fulfill()
+                }, failure: { (error: APIClientError) in
+                    if case .mappingFailed = error {
+                        expectation.fulfill()
+                    } else {
+                        XCTFail("Error should be of type mapping failed")
+                    }
                 })
             })
         }
@@ -215,8 +237,12 @@ class PerfectAPIClientTests: APIClientTestCase {
             JSONPlaceholderAPIClient.invalidEndpoint.request { (result: APIClientResult<APIClientResponse>) in
                 result.analysis(success: { (_) in
                     XCTFail("Invalid Endpoint shouldn't succeed")
-                }, failure: { (_) in
-                    expectation.fulfill()
+                }, failure: { (error: APIClientError) in
+                    if case .badResponseStatus = error {
+                        expectation.fulfill()
+                    } else {
+                        XCTFail("Error should be of type bad response status")
+                    }
                 })
             }
         }
