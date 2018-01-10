@@ -423,7 +423,6 @@ PerfectAPIClient is using the following dependencies:
 * [Perfect-HTTP](https://github.com/PerfectlySoft/Perfect-HTTP)
 * [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL)
 * [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper)
-* [SwiftEnv](https://github.com/eman6576/SwiftEnv)
 
 ## Contributing
 Contributions are very welcome 🙌 🤓
