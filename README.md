@@ -256,6 +256,7 @@ By overriding the `shouldFailOnBadResponseStatus()` function you can decide if t
 
 ```swift
 public func shouldFailOnBadResponseStatus() -> Bool {
+    // Default implementation
     return true
 }
 ```
@@ -283,23 +284,25 @@ func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIC
 
 ## Mocking (Unit-Tests)
 
-### APIClientTestCase
-Ensure that your test class inherits from [APIClientTestCase](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Sources/PerfectAPIClient/TestCase/APIClientTestCase.swift) which sets an environment variable in order to allow the APIClient to evaluate if the runtime is under unit test conditions. If you need to override the `setUp` or `tearDown` function don't forget to call the `super` implementation.
+In order to define that your `APIClient` is under `Unit` or `Integration` Tests condition, you need to update the `APIClientEnvironmentMode`. The recommended way is to override `setUp` and `tearDown` and update the `APIClientEnvironmentMode` as seen in the following example.
 
 ```swift
 import XCTest
 import PerfectAPIClient
 
-class MyAPIClientTestClass: APIClientTestCase {
+class MyAPIClientTestClass: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Your setUp logic
+        // Enable Test Environment Mode
+        // MockResponseResult is used if available
+        APIClientEnvironment.shared.mode = .test
     }
     
     override func tearDown() {
         super.tearDown()
-        // Your tearDown logic
+        // Reset to Standard Environment Mode
+        APIClientEnvironment.shared.mode = .standard
     }
 
     func testMyAPIClient() {
@@ -318,7 +321,8 @@ var mockResponseResult: APIClientResult<APIClientResponse>? {
     switch self {
     case .zen:
         // This result will be used when unit tests are running
-        let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.")
+        let request = APIClientRequest(apiClient: self)
+        let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.", request: request)
         return .success(response)
     case .user:
         // A real network request will be performed when unit tests are running
