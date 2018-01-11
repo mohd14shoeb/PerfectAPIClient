@@ -48,17 +48,17 @@ public struct APIClientRequest {
         var options: [CURLRequest.Option] = [
             .httpMethod(apiClient.method)
         ]
-        // Check if additional options are available
-        if let apiOptions = apiClient.options {
-            // Append apiOptions
-            options.append(contentsOf: apiOptions)
-        }
         // Check if a request payload object is available
         if let payloadString = apiClient.requestPayload?.toJSONString() {
             // Append payload as json encoded string
             options.append(.postString(payloadString))
             // Append HTTP header content type JSON
             options.append(.addHeader(.contentType, "application/json"))
+        }
+        // Check if additional options are available
+        if let apiOptions = apiClient.options {
+            // Append apiOptions
+            options.append(contentsOf: apiOptions)
         }
         // Unwrap HTTP Headers
         if let headers = apiClient.headers {
