@@ -21,10 +21,6 @@ matrix:
 
 before_install:
   - git clone https://github.com/IBM-Swift/Package-Builder.git
-  - chmod +x .travis/install-dependencies.sh
-
-install:
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./.travis/install-dependencies.sh; fi
 
 script:
   - ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
