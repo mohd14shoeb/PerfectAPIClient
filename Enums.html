@@ -31,7 +31,7 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/APIClientTestCase.html">APIClientTestCase</a>
+                <a href="Classes/APIClientEnvironment.html">APIClientEnvironment</a>
               </li>
             </ul>
           </li>
@@ -39,18 +39,13 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/APIClientError.html">APIClientError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/APIClientResult.html">APIClientResult</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/Array.html">Array</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Extensions/SwiftEnv.html">SwiftEnv</a>
               </li>
             </ul>
           </li>
@@ -60,11 +55,17 @@
               <li class="nav-group-task">
                 <a href="Protocols/APIClient.html">APIClient</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Protocols/JSONCustomStringConvertible.html">JSONCustomStringConvertible</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/APIClientRequest.html">APIClientRequest</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Structs/APIClientResponse.html">APIClientResponse</a>
               </li>
@@ -80,6 +81,76 @@
 
           </section>
           <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B15EnvironmentModeO"></a>
+                    <a name="//apple_ref/swift/Enum/APIClientEnvironmentMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B15EnvironmentModeO">APIClientEnvironmentMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The APIClientEnvironmentMode</p>
+
+                        <a href="Enums/APIClientEnvironmentMode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientEnvironmentMode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/APIClientError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO">APIClientError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>APIClientError</p>
+
+<ul>
+<li>mappingFailed: The mapping failed</li>
+<li>badResponseStatus: Retrieved bad response status</li>
+<li>connectionFailed: The connection failed</li>
+</ul>
+
+                        <a href="Enums/APIClientError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientError</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <ul>
                 <li class="item">
@@ -108,7 +179,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientResult</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientResult</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -121,7 +192,7 @@
         </section>
         <section id="footer">
           <p>Copyright 2017 Sven Tiigi</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

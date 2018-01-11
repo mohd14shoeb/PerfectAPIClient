@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>APIClientError Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/APIClientError" class="dashAnchor"></a>
+    <a title="APIClientError Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">PerfectAPIClient Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/SvenTiigi/PerfectAPIClient"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">PerfectAPIClient Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        APIClientError Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIClientEnvironment.html">APIClientEnvironment</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/APIClientError.html">APIClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/APIClientResult.html">APIClientResult</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/APIClient.html">APIClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONCustomStringConvertible.html">JSONCustomStringConvertible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/APIClientRequest.html">APIClientRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/APIClientResponse.html">APIClientResponse</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>APIClientError</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientError</span></code></pre>
+
+                </div>
+              </div>
+            <p>APIClientError</p>
+
+<ul>
+<li>mappingFailed: The mapping failed</li>
+<li>badResponseStatus: Retrieved bad response status</li>
+<li>connectionFailed: The connection failed</li>
+</ul>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO13mappingFailedACSS6reason_AA0B8ResponseV8responsetcACmF"></a>
+                    <a name="//apple_ref/swift/Element/mappingFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO13mappingFailedACSS6reason_AA0B8ResponseV8responsetcACmF">mappingFailed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>APIClient failed on mapping</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">mappingFailed</span><span class="p">(</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO17badResponseStatusAcA0bE0V8response_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/badResponseStatus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO17badResponseStatusAcA0bE0V8response_tcACmF">badResponseStatus</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>APIClient did retrieved bad response status</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">badResponseStatus</span><span class="p">(</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO16connectionFailedACs0C0_p5error_AA0B7RequestV7requesttcACmF"></a>
+                    <a name="//apple_ref/swift/Element/connectionFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO16connectionFailedACs0C0_p5error_AA0B7RequestV7requesttcACmF">connectionFailed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The connection failed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">connectionFailed</span><span class="p">(</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO20localizedDescriptionSSv"></a>
+                    <a name="//apple_ref/swift/Property/localizedDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO20localizedDescriptionSSv">localizedDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The localized APIClientError Description</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localizedDescription</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B5ErrorO8analysisyySS_AA0B8ResponseVtcSg13mappingFailed_yAFcSg03badE6Statusys0C0_p_AA0B7RequestVtcSg010connectionG0tF"></a>
+                    <a name="//apple_ref/swift/Method/analysis(mappingFailed:badResponseStatus:connectionFailed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B5ErrorO8analysisyySS_AA0B8ResponseVtcSg13mappingFailed_yAFcSg03badE6Statusys0C0_p_AA0B7RequestVtcSg010connectionG0tF">analysis(mappingFailed:badResponseStatus:connectionFailed:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Perform APIClientError Analysis</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">analysis</span><span class="p">(</span><span class="nv">mappingFailed</span><span class="p">:</span> <span class="p">((</span><span class="kt">String</span><span class="p">,</span> <span class="kt"><a href="../Structs/APIClientResponse.html">APIClientResponse</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?,</span>
+              <span class="nv">badResponseStatus</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Structs/APIClientResponse.html">APIClientResponse</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?,</span>
+              <span class="nv">connectionFailed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">,</span> <span class="kt"><a href="../Structs/APIClientRequest.html">APIClientRequest</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mappingFailed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked when error is mappingFailed</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>badResponseStatus</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked when error is badResponseStatus</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connectionFailed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked when error is connectionFailed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright 2017 Sven Tiigi</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
