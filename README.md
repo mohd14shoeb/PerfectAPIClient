@@ -26,7 +26,7 @@ PerfectAPIClient is a network abstraction layer to perform network requests via 
 
 <p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/img/diagram.png" width="40%"></p>
 
-## Installation
+# Installation
 To integrate using Apple's [Swift Package Manager](https://swift.org/package-manager/), add the following as a dependency to your `Package.swift`:
 
 ```swift
@@ -63,7 +63,7 @@ let package = Package(
 )
 ```
 
-## Setup
+# Setup
 In order to define the network abstraction layer with PerfectAPIClient, an enumeration will be declared to access the API endpoints. In this example we declare a [GithubAPIClient](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/GithubAPI/GithubAPIClient.swift) to retrieve some Github [zen](https://api.github.com/zen) and [user information](https://api.github.com/users/sventiigi).
 
 ```swift
@@ -149,7 +149,7 @@ extension GithubAPIClient: APIClient {
 ```
 There is also an [JSONPlaceholderAPIClient](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/JSONPlaceholderAPI/JSONPlaceholderAPI.swift) example available.
 
-## Usage
+# Usage
 PerfectAPIClient enables an easy way to access an API like this:
 
 ```swift
@@ -221,7 +221,34 @@ extension User: Mappable {
 }
 ```
 
-## Advanced Usage
+# Error Handling
+When you perform the `analysis` function on the `APIClientResult` or you do a simple `switch` or `if case` on the `APIClientResult` you will retrieve an `APIClientError` via the `failure` case if an error occured. The following example shows what types of error cases are available on the `APIClientError`.
+
+```swift
+GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
+    result.analysis(success: { (response: APIClientResponse) in
+        // Do awesome stuff with the response
+    }, failure: { (error: APIClientError) in
+        // Oh boy you are in trouble 😨
+	// Analysis the APIClientError
+        error.analysis(mappingFailed: { (reason: String, response: APIClientResponse) in
+	    // Mapping failed
+        }, badResponseStatus: { (response: APIClientResponse) in
+            // Bad response status
+        }, connectionFailed: { (error: Error, request: APIClientRequest) in
+            // Connection failure
+        })
+    }
+}
+```
+
+* `MappingFailed`: Indicates that the Mapping between your `mappable` type and the response `JSON` doesn't match.
+* `BadResponseStatus`: Indicates that the `APIClient` has received a bad response status `>= 300` or `< 200`
+* `ConnectionFailed`: Indicates that an error occurred during the CURL request to the given url.
+
+The `analysis` function on the `APIClientError` is just a convenience way to check which error type has been retrieved. Of course you can perform a `switch` or an `if case` on the `APIClientError` enumeration.
+
+# Advanced Usage
 
 ### Modify Request URL
 By overriding the `modify(requestURL ...)` function you can update the constructed request URL from baseURL and path. It's handy when you want to add a `Token` query parameter to your request url everytime instead of adding it to every path.
@@ -261,7 +288,7 @@ public func shouldFailOnBadResponseStatus() -> Bool {
 }
 ```
 
-## Logging
+# Logging
 By overrding the following two functions you can add logging to your request before the request started and when a response is retrieved or something else you might want to do.
 
 ### Will Perform Request
@@ -282,7 +309,7 @@ func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIC
 }
 ```
 
-## Mocking (Unit/Integration-Tests)
+# Mocking
 
 In order to define that your `APIClient` is under `Unit` or `Integration` Tests condition, you need to update the `APIClientEnvironmentMode`. The recommended way is to override `setUp` and `tearDown` and update the `APIClientEnvironmentMode` as seen in the following example.
 
@@ -332,7 +359,7 @@ var mockResponseResult: APIClientResult<APIClientResponse>? {
 ```
 For more details checkout the [PerfectAPIClientTests.swift](https://github.com/SvenTiigi/PerfectAPIClient/blob/master/Tests/PerfectAPIClientTests/PerfectAPIClientTests.swift) file.
 
-## Slashes
+# Slashes
 When your ask yourself where to put the slash `/` when returning a String for `baseURL` and `path` 🤔
 
 This is the recommended way ☝️:
@@ -350,7 +377,7 @@ var path: String {
 ```
 Put a slash at the end of your `baseURL` and skip the slash at the beginning of your `path`. But don't worry `APIClient` has a default implementation for the `getRequestURL()` function which add a slash to the `baseURL` if you forgot it and remove the first character of your `path` if it's a slash. If you want to change the behavior just override the function 👌
 
-## RawRepresentable
+# RawRepresentable
 As most of your enumeration cases will be mixed with [Associated Values](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID148) and some without, it's hard to retrieve the enumerations name as a String because you can't declare an Enumeration with associated values like this: 
 
 ``` swift
@@ -409,7 +436,7 @@ print(GithubAPIClient.user(name: "sventiigi").rawValue) // user
 
 Awesome 😎
 
-## Linux Build Notes
+# Linux Build Notes
 Ensure that you have installed `libcurl`.
 
 ```
@@ -417,23 +444,23 @@ sudo apt-get install libcurl4-openssl-dev
 ```
 If you run into problems with `JSON-Mapping` on `Int` and `Double` values using the [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library under Linux, please see this [issue](https://github.com/Hearst-DD/ObjectMapper/issues/884).
 
-## Dependencies
+# Dependencies
 PerfectAPIClient is using the following dependencies:
 
 * [Perfect-HTTP](https://github.com/PerfectlySoft/Perfect-HTTP)
 * [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL)
 * [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper)
 
-## Contributing
+# Contributing
 Contributions are very welcome 🙌 🤓
 
-## To-Do
+# To-Do
 
 - [ ] Improve Unit-Tests
 - [ ] Improve Linux compatibility
 - [ ] Add automated Jazzy documentation generation via Travis CI
 
-## License
+# License
 
 ```
 MIT License
