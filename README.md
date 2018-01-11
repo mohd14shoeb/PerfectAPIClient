@@ -282,7 +282,7 @@ func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIC
 }
 ```
 
-## Mocking (Unit-Tests)
+## Mocking (Unit/Integration-Tests)
 
 In order to define that your `APIClient` is under `Unit` or `Integration` Tests condition, you need to update the `APIClientEnvironmentMode`. The recommended way is to override `setUp` and `tearDown` and update the `APIClientEnvironmentMode` as seen in the following example.
 
