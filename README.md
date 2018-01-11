@@ -252,7 +252,7 @@ public func modify(responseJSONArray: inout [[String: Any]], mappable: BaseMappa
 ```
 
 ### Should fail on bad response status
-By overriding the `shouldFailOnBadResponseStatus()` function you can decide if the `APIClient` should evaluate the result as a failure if the response status code is`>= 300` and `< 200`. The default implementation returns `true` which results that an response with an bad response status code will lead to an `APIClientResult` of type `failure`.
+By overriding the `shouldFailOnBadResponseStatus()` function you can decide if the `APIClient` should evaluate the result as a failure if the response status code is`>= 300` or `< 200`. The default implementation returns `true` which results that an response with an bad response status code will lead to an `APIClientResult` of type `failure`.
 
 ```swift
 public func shouldFailOnBadResponseStatus() -> Bool {
