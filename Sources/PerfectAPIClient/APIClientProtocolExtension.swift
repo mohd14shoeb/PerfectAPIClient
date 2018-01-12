@@ -22,7 +22,7 @@ public extension APIClient {
         // Initialize path
         var path = self.path
         // Check if baseUrl last character is not slash
-        if baseUrl.last != "/" {
+        if baseUrl.last != "/" && !path.isEmpty {
             // Add a slash
             baseUrl += "/"
         }
@@ -31,8 +31,12 @@ public extension APIClient {
             // Chop first character
             path = String(path.dropFirst())
         }
-        // Return url
-        return baseUrl + path
+        // Initialize request url
+        var requestURL = baseUrl + path
+        // Invoke modifyRequestURL
+        self.modify(requestURL: &requestURL)
+        // Return request url
+        return requestURL
     }
     
     /// Modify the request url that is used to perform the API request
