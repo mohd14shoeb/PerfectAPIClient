@@ -18,7 +18,7 @@
 		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
 	</a>
 	<a href="https://twitter.com/SvenTiigi" target="_blank">
-		<img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
+		<img src="https://img.shields.io/badge/Twitter-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
 </p>
 
