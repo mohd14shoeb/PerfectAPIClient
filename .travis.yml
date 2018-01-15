@@ -10,6 +10,11 @@ notifications:
     on_success: change
     on_failure: always
 
+addons:
+  apt:
+    packages:
+      - openssl
+
 matrix:
   include:
     - os: linux
@@ -22,9 +27,6 @@ matrix:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y update ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libssl-dev ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libcurl4-openssl-dev ; fi
-  - openssl version -a
   - git clone https://github.com/IBM-Swift/Package-Builder.git
 
 script:
