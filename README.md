@@ -124,7 +124,7 @@ extension GithubAPIClient: APIClient {
     }
     
     /// The request payload for a POST or PUT request
-    var requestPayload: BaseMappable? {
+    var payload: BaseMappable? {
         return nil
     }
     
@@ -133,8 +133,8 @@ extension GithubAPIClient: APIClient {
         return nil
     }
     
-    /// The mock response result for unit tests
-    var mockResponseResult: APIClientResult<APIClientResponse>? {
+    /// The mocked result for tests environment
+    var mockedResult: APIClientResult<APIClientResponse>? {
         switch self {
         case .zen:
             let request = APIClientRequest(apiClient: self)
@@ -311,7 +311,7 @@ func didRetrieveResponse(request: APIClientRequest, result: APIClientResult<APIC
 
 # Mocking
 
-In order to define that your `APIClient` is under `Unit` or `Integration` Tests condition, you need to update the `APIClientEnvironmentMode`. The recommended way is to override `setUp` and `tearDown` and update the `APIClientEnvironmentMode` as seen in the following example.
+In order to define that your `APIClient` is under `Unit` or `Integration` Tests condition, you need to set the `environment` to `tests`. The recommended way is to override `setUp` and `tearDown` and update the `environment` as seen in the following example.
 
 ```swift
 import XCTest
@@ -321,15 +321,15 @@ class MyAPIClientTestClass: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Enable Test Environment Mode
-        // MockResponseResult is used if available
-        APIClientEnvironment.shared.mode = .test
+        // Set to tests environment
+        // mockedResult is used if available
+        MyAPIClient.environment = .tests
     }
     
     override func tearDown() {
         super.tearDown()
-        // Reset to Standard Environment Mode
-        APIClientEnvironment.shared.mode = .standard
+        // Reset to default environment
+        MyAPIClient.environment = .default
     }
 
     func testMyAPIClient() {
@@ -339,12 +339,12 @@ class MyAPIClientTestClass: XCTestCase {
 }
 ```
 
-### MockResponseResult
+### MockedResult
 
-In order to add mocking to your APIClient for unit testing your application you can return an `APIClientResult` via the `mockResponseResult` protocol variable. The `mockResponseResult` is only used when you return an `APIClientResult` and the current runtime is under unit test conditions.
+In order to add mocking to your APIClient for unit testing your application you can return an `APIClientResult` via the `mockedResult` protocol variable. The `mockedResult` is only used when you return an `APIClientResult` and the current `environment` is set to `tests`.
 
 ```swift
-var mockResponseResult: APIClientResult<APIClientResponse>? {
+var mockedResult: APIClientResult<APIClientResponse>? {
     switch self {
     case .zen:
         // This result will be used when unit tests are running
