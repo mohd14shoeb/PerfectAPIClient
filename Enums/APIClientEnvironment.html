@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SwiftEnv Extension Reference</title>
+    <title>APIClientEnvironment Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/SwiftEnv" class="dashAnchor"></a>
-    <a title="SwiftEnv Extension Reference"></a>
+    <a name="//apple_ref/swift/Enum/APIClientEnvironment" class="dashAnchor"></a>
+    <a title="APIClientEnvironment Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">PerfectAPIClient Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">PerfectAPIClient Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SwiftEnv Extension Reference
+        APIClientEnvironment Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -32,7 +32,7 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/APIClientTestCase.html">APIClientTestCase</a>
+                <a href="../Classes/APIClientEnvironmentManager.html">APIClientEnvironmentManager</a>
               </li>
             </ul>
           </li>
@@ -40,18 +40,13 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/APIClientError.html">APIClientError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/APIClientResult.html">APIClientResult</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/Array.html">Array</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/SwiftEnv.html">SwiftEnv</a>
               </li>
             </ul>
           </li>
@@ -61,11 +56,17 @@
               <li class="nav-group-task">
                 <a href="../Protocols/APIClient.html">APIClient</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONCustomStringConvertible.html">JSONCustomStringConvertible</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/APIClientRequest.html">APIClientRequest</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Structs/APIClientResponse.html">APIClientResponse</a>
               </li>
@@ -76,14 +77,20 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>SwiftEnv</h1>
+            <h1>APIClientEnvironment</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">class</span> <span class="kt">SwiftEnv</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientEnvironment</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>The APIClientEnvironment specifies the environment for an APIClient</p>
+
+<ul>
+<li><code>default</code>: The default environment. Performs real network requests</li>
+<li>tests: The tests environment. Use mockedResponseResult if available</li>
+</ul>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -91,9 +98,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8SwiftEnvAAC16PerfectAPIClientE27apiClientUnitTestIdentifier33_76FA077521B37DA8E96C02290DB23625LLSSvZ"></a>
-                    <a name="//apple_ref/swift/Variable/apiClientUnitTestIdentifier" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8SwiftEnvAAC16PerfectAPIClientE27apiClientUnitTestIdentifier33_76FA077521B37DA8E96C02290DB23625LLSSvZ">apiClientUnitTestIdentifier</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentO7defaultA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentO7defaultA2CmF">default</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -101,26 +108,32 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The PerfectAPIClient unit tests environment variable identifier</p>
+                        <p>The default case specifies that the APIClient is running
+in a default environment where no mocked results should be used
+and real network requests should be executed</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">apiClientUnitTestIdentifier</span> <span class="o">=</span> <span class="s">"PerfectAPIClientUnitTestCase"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="p">`</span><span class="nv">default</span><span class="p">`</span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8SwiftEnvAAC16PerfectAPIClientE09isRunningD9UnitTestsSbvZ"></a>
-                    <a name="//apple_ref/swift/Variable/isRunningAPIClientUnitTests" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8SwiftEnvAAC16PerfectAPIClientE09isRunningD9UnitTestsSbvZ">isRunningAPIClientUnitTests</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentO5testsA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/tests" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentO5testsA2CmF">tests</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -128,14 +141,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Idenfity if the current runtime for PerfectAPIClient is under unit test conditions</p>
+                        <p>The tests case specifies that the APIClient is running
+under Unit/Integration Tests Environment. If a mockedResponseResult
+is available this mocked result will be used in order to mock the network request</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">isRunningAPIClientUnitTests</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">tests</span></code></pre>
 
                         </div>
                       </div>
@@ -148,7 +163,7 @@
         </section>
         <section id="footer">
           <p>Copyright 2017 Sven Tiigi</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

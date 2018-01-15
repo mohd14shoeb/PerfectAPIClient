@@ -31,7 +31,7 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/APIClientEnvironment.html">APIClientEnvironment</a>
+                <a href="Classes/APIClientEnvironmentManager.html">APIClientEnvironmentManager</a>
               </li>
             </ul>
           </li>
@@ -39,7 +39,7 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a>
+                <a href="Enums/APIClientEnvironment.html">APIClientEnvironment</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/APIClientError.html">APIClientError</a>
@@ -86,9 +86,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B15EnvironmentModeO"></a>
-                    <a name="//apple_ref/swift/Enum/APIClientEnvironmentMode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B15EnvironmentModeO">APIClientEnvironmentMode</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentO"></a>
+                    <a name="//apple_ref/swift/Enum/APIClientEnvironment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentO">APIClientEnvironment</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -96,15 +96,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The APIClientEnvironmentMode</p>
+                        <p>The APIClientEnvironment specifies the environment for an APIClient</p>
 
-                        <a href="Enums/APIClientEnvironmentMode.html" class="slightly-smaller">See more</a>
+<ul>
+<li><code>default</code>: The default environment. Performs real network requests</li>
+<li>tests: The tests environment. Use mockedResponseResult if available</li>
+</ul>
+
+                        <a href="Enums/APIClientEnvironment.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientEnvironmentMode</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientEnvironment</span></code></pre>
 
                         </div>
                       </div>

@@ -32,7 +32,7 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/APIClientEnvironment.html">APIClientEnvironment</a>
+                <a href="../Classes/APIClientEnvironmentManager.html">APIClientEnvironmentManager</a>
               </li>
             </ul>
           </li>
@@ -40,7 +40,7 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a>
+                <a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/APIClientError.html">APIClientError</a>
@@ -90,6 +90,51 @@
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B0P11environmentAA0B11EnvironmentOvZ"></a>
+                    <a name="//apple_ref/swift/Variable/environment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B0P11environmentAA0B11EnvironmentOvZ">environment</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The current environment. Default case: .default</p>
+
+<ul>
+<li><code>default</code>: The default environment. Performs real network requests</li>
+<li>tests: The tests environment uses mockedResult if available</li>
+</ul>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>The current environment. Default case: .default</p>
+
+<ul>
+<li><code>default</code>: The default environment. Performs real network requests</li>
+<li>tests: The tests environment uses mockedResult if available</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">environment</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -201,9 +246,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B0P14requestPayload12ObjectMapper12BaseMappable_pSgv"></a>
-                    <a name="//apple_ref/swift/Property/requestPayload" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B0P14requestPayload12ObjectMapper12BaseMappable_pSgv">requestPayload</a>
+                    <a name="/s:16PerfectAPIClient0B0P7payload12ObjectMapper12BaseMappable_pSgv"></a>
+                    <a name="//apple_ref/swift/Property/payload" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B0P7payload12ObjectMapper12BaseMappable_pSgv">payload</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -218,7 +263,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">requestPayload</span><span class="p">:</span> <span class="kt">BaseMappable</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt">BaseMappable</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -255,9 +300,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B0P18mockResponseResultAA0bE0OyAA0bD0VGSgv"></a>
-                    <a name="//apple_ref/swift/Property/mockResponseResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B0P18mockResponseResultAA0bE0OyAA0bD0VGSgv">mockResponseResult</a>
+                    <a name="/s:16PerfectAPIClient0B0P12mockedResultAA0bD0OyAA0B8ResponseVGSgv"></a>
+                    <a name="//apple_ref/swift/Property/mockedResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B0P12mockedResultAA0bD0OyAA0B8ResponseVGSgv">mockedResult</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -265,14 +310,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The mock response result for unit testing</p>
+                        <p>The mocked result for tests environment</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">mockResponseResult</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientResult.html">APIClientResult</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/APIClientResponse.html">APIClientResponse</a></span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">mockedResult</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientResult.html">APIClientResult</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/APIClientResponse.html">APIClientResponse</a></span><span class="o">&gt;</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

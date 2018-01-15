@@ -31,7 +31,7 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/APIClientEnvironment.html">APIClientEnvironment</a>
+                <a href="Classes/APIClientEnvironmentManager.html">APIClientEnvironmentManager</a>
               </li>
             </ul>
           </li>
@@ -39,7 +39,7 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a>
+                <a href="Enums/APIClientEnvironment.html">APIClientEnvironment</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/APIClientError.html">APIClientError</a>
@@ -97,7 +97,7 @@
         <img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
     </a>
     <a href="https://twitter.com/SvenTiigi" target="_blank">
-        <img src="https://img.shields.io/badge/contact-@SvenTiigi-blue.svg" alt="@SvenTiigi">
+        <img src="https://img.shields.io/badge/Twitter-@SvenTiigi-blue.svg" alt="@SvenTiigi">
     </a>
 </p>
 
@@ -363,7 +363,7 @@
 </code></pre>
 <h1 id='mocking' class='heading'>Mocking</h1>
 
-<p>In order to define that your <code><a href="Protocols/APIClient.html">APIClient</a></code> is under <code>Unit</code> or <code>Integration</code> Tests condition, you need to update the <code><a href="Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a></code>. The recommended way is to override <code>setUp</code> and <code>tearDown</code> and update the <code><a href="Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a></code> as seen in the following example.</p>
+<p>In order to define that your <code><a href="Protocols/APIClient.html">APIClient</a></code> is under <code>Unit</code> or <code>Integration</code> Tests condition, you need to update the <code>APIClientEnvironmentMode</code>. The recommended way is to override <code>setUp</code> and <code>tearDown</code> and update the <code>APIClientEnvironmentMode</code> as seen in the following example.</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">XCTest</span>
 <span class="kd">import</span> <span class="kt">PerfectAPIClient</span>
 

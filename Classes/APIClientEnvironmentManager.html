@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>APIClientRequest Structure Reference</title>
+    <title>APIClientEnvironmentManager Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/APIClientRequest" class="dashAnchor"></a>
-    <a title="APIClientRequest Structure Reference"></a>
+    <a name="//apple_ref/swift/Class/APIClientEnvironmentManager" class="dashAnchor"></a>
+    <a title="APIClientEnvironmentManager Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">PerfectAPIClient Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">PerfectAPIClient Reference</a>
         <img id="carat" src="../img/carat.png" />
-        APIClientRequest Structure Reference
+        APIClientEnvironmentManager Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -77,14 +77,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>APIClientRequest</h1>
+            <h1>APIClientEnvironmentManager</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">APIClientRequest</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">APIClientEnvironmentManager</span></code></pre>
 
                 </div>
               </div>
-            <p>APIClientRequest represents an API request</p>
+            <p>The APIClientEnvironmentManager Singleton holds the environment states</p>
 
           </section>
           <section class="section task-group-section">
@@ -93,9 +93,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestV3urlSSv"></a>
-                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestV3urlSSv">url</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerC6sharedACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/shared" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerC6sharedACvZ">shared</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -103,14 +103,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The url</p>
+                        <p>Shared instance</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">shared</span> <span class="o">=</span> <span class="nf">APIClientEnvironmentManager</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -120,9 +120,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestV6method0A4HTTP10HTTPMethodOv"></a>
-                    <a name="//apple_ref/swift/Property/method" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestV6method0A4HTTP10HTTPMethodOv">method</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerC06clientC0s10DictionaryVySSAA0bC0OGv"></a>
+                    <a name="//apple_ref/swift/Property/clientEnvironment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerC06clientC0s10DictionaryVySSAA0bC0OGv">clientEnvironment</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -130,14 +130,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The HTTP method</p>
+                        <p>The APIClient Environments</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">HTTPMethod</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">clientEnvironment</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span></code></pre>
 
                         </div>
                       </div>
@@ -147,9 +147,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestV7optionsSay0A4CURL11CURLRequestC6OptionOGv"></a>
-                    <a name="//apple_ref/swift/Property/options" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestV7optionsSay0A4CURL11CURLRequestC6OptionOGv">options</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerCACyc33_7B336080F22892F8A9F0F16DD77ED8EDLlfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerCACyc33_7B336080F22892F8A9F0F16DD77ED8EDLlfc">init()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -157,14 +157,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The request options</p>
+                        <p>Private initializer</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">CURLRequest</span><span class="o">.</span><span class="kt">Option</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="nf">init</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -174,9 +174,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestV7payload12ObjectMapper12BaseMappable_pSgv"></a>
-                    <a name="//apple_ref/swift/Property/payload" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestV7payload12ObjectMapper12BaseMappable_pSgv">payload</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerC3setyAA0bC0O_xm03forB0tAA0B0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/set(_:forAPIClient:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerC3setyAA0bC0O_xm03forB0tAA0B0RzlF">set(_:forAPIClient:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -184,42 +184,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The payload</p>
+                        <p>Set the environment for an APIClient</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt">BaseMappable</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestVACSS3url_0A4HTTP10HTTPMethodO6methodSay0A4CURL11CURLRequestC6OptionOG7options12ObjectMapper12BaseMappable_pSg7payloadtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(url:method:options:payload:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestVACSS3url_0A4HTTP10HTTPMethodO6methodSay0A4CURL11CURLRequestC6OptionOG7options12ObjectMapper12BaseMappable_pSg7payloadtcfc">init(url:method:options:payload:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Initializer</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">HTTPMethod</span><span class="p">,</span>
-            <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">CURLRequest</span><span class="o">.</span><span class="kt">Option</span><span class="p">],</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt">BaseMappable</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="k">set</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt"><a href="../Protocols/APIClient.html">APIClient</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a></span><span class="p">,</span> <span class="n">forAPIClient</span> <span class="nv">apiClient</span><span class="p">:</span> <span class="kt">T</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -230,48 +202,24 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>url</em>
+                                <em>mode</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The url</p>
+                                  <p>The environment</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>method</em>
+                                <em>apiClient</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The HTTP method</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>options</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The request options</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>payload</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The optional payload</p>
+                                  <p>The APIClient</p>
                                 </div>
                               </td>
                             </tr>
@@ -284,9 +232,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestVAcA0B0_p9apiClient_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(apiClient:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestVAcA0B0_p9apiClient_tcfc">init(apiClient:)</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerC3getAA0bC0Oxm03forB0_tAA0B0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/get(forAPIClient:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerC3getAA0bC0Oxm03forB0_tAA0B0RzlF">get(forAPIClient:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -294,14 +242,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initializer with APIClient</p>
+                        <p>Retrieve the environment for an APIClient</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">apiClient</span><span class="p">:</span> <span class="kt"><a href="../Protocols/APIClient.html">APIClient</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="k">get</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt"><a href="../Protocols/APIClient.html">APIClient</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">forAPIClient</span> <span class="nv">apiClient</span><span class="p">:</span> <span class="kt">T</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/APIClientEnvironment.html">APIClientEnvironment</a></span></code></pre>
 
                         </div>
                       </div>
@@ -324,19 +272,19 @@
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The environment. If no environment has been set default value will be returned</p>
+                      </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B7RequestV4jsons10DictionaryVySSypGv"></a>
-                    <a name="//apple_ref/swift/Property/json" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B7RequestV4jsons10DictionaryVySSypGv">json</a>
+                    <a name="/s:16PerfectAPIClient0B18EnvironmentManagerC18getSubjectTypeName33_7B336080F22892F8A9F0F16DD77ED8EDLLSSxmAA0B0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/getSubjectTypeName(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B18EnvironmentManagerC18getSubjectTypeName33_7B336080F22892F8A9F0F16DD77ED8EDLLSSxmAA0B0RzlF">getSubjectTypeName(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -344,16 +292,39 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A JSON representation of this instance</p>
+                        <p>Retrieve SubjectType name of an APIClient</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">json</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="kd">func</span> <span class="n">getSubjectTypeName</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt"><a href="../Protocols/APIClient.html">APIClient</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">apiClient</span><span class="p">:</span> <span class="kt">T</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>apiClient</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The APIClient</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The SubjectType name string</p>
                       </div>
                     </section>
                   </div>
