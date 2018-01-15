@@ -9,7 +9,7 @@ import Foundation
 
 /// Extended CustomStringConvertible to return pretty printed JSON
 /// as textual representation of this instance.
-public protocol JSONCustomStringConvertible: CustomStringConvertible {
+protocol JSONCustomStringConvertible: CustomStringConvertible {
     
     /// A JSON representation of this instance
     var json: [String: Any] { get }
