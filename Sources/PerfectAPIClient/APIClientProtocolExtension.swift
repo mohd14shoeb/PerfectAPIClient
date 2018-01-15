@@ -217,10 +217,10 @@ fileprivate extension APIClient {
     ///   - requestCompletion: The request completion closure after result has been retrieved
     func performRequest(_ request: APIClientRequest,
                         requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
-        // Check if a mockedResponseResult object is available and environment is under unit test conditions
-        if let mockedResponseResult = self.mockedResult, Self.environment == .tests {
-            // Invoke requestCompletion with mockedResponseResult
-            requestCompletion(mockedResponseResult)
+        // Check if a mockedResult object is available and environment is under unit test conditions
+        if let mockedResult = self.mockedResult, Self.environment == .tests {
+            // Invoke requestCompletion with mockedResult
+            requestCompletion(mockedResult)
             // Return out of function
             return
         }
