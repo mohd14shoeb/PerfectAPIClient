@@ -21,10 +21,7 @@ enum GithubAPIClient {
 }
 
 // MARK: APIClient
-
 extension GithubAPIClient: APIClient {
-    
-    public static let test = ""
     
     var baseURL: String {
         return "https://api.github.com/"
@@ -56,7 +53,7 @@ extension GithubAPIClient: APIClient {
         return [.userAgent: "PerfectAPIClient"]
     }
     
-    var requestPayload: BaseMappable? {
+    var payload: BaseMappable? {
         // No request payload needed
         return nil
     }
@@ -66,7 +63,7 @@ extension GithubAPIClient: APIClient {
         return nil
     }
     
-    var mockResponseResult: APIClientResult<APIClientResponse>? {
+    var mockedResult: APIClientResult<APIClientResponse>? {
         let request = APIClientRequest(apiClient: self)
         switch self {
         case .zen:

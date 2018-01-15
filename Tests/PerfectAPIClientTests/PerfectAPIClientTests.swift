@@ -17,7 +17,7 @@ class PerfectAPIClientTests: XCTestCase {
     
     /// All tests
     static var allTests = [
-        ("testAPIClientEnvironmentModeIsTest", testAPIClientEnvironmentModeIsTest),
+        ("testAPIClientEnvironment", testAPIClientEnvironment),
         ("testGithubZenEndpoint", testGithubZenEndpoint),
         ("testGithubZenEndpointWithInvalidMappable", testGithubZenEndpointWithInvalidMappable),
         ("testGithubZenEndpointWithInvalidResponseMappable", testGithubZenEndpointWithInvalidResponseMappable),
@@ -35,7 +35,8 @@ class PerfectAPIClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Enable Test Environment
-        APIClientEnvironment.shared.mode = .test
+        GithubAPIClient.environment = .tests
+        JSONPlaceholderAPIClient.environment = .tests
         // Disable continute after failure
         self.continueAfterFailure = false
     }
@@ -46,7 +47,8 @@ class PerfectAPIClientTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         // Reset Environment
-        APIClientEnvironment.shared.mode = .standard
+        GithubAPIClient.environment = .default
+        JSONPlaceholderAPIClient.environment = .default
     }
     
     // MARK: Private test helper function
@@ -75,8 +77,12 @@ class PerfectAPIClientTests: XCTestCase {
     // MARK: Environment Test
     
     /// Test APIClientEnvironment
-    func testAPIClientEnvironmentModeIsTest() {
-        XCTAssert(APIClientEnvironment.shared.isMode(.test))
+    func testAPIClientEnvironment() {
+        XCTAssertEqual(GithubAPIClient.environment, .tests)
+        XCTAssertEqual(JSONPlaceholderAPIClient.environment, .tests)
+        GithubAPIClient.environment = .default
+        XCTAssertEqual(GithubAPIClient.environment, .default)
+        XCTAssertEqual(JSONPlaceholderAPIClient.environment, .tests)
     }
     
     // MARK: Github Tests [Mocked]

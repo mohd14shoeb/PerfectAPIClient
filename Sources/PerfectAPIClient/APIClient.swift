@@ -12,6 +12,11 @@ import ObjectMapper
 /// APIClient defines a protocol for accessing an API
 public protocol APIClient {
     
+    /// The current environment. Default case: .default
+    /// - `default`: The default environment. Performs real network requests
+    /// - tests: The tests environment uses mockedResult if available
+    static var environment: APIClientEnvironment { get set }
+    
     /// The base url
     var baseURL: String { get }
     
@@ -25,13 +30,13 @@ public protocol APIClient {
     var headers: [HTTPRequestHeader.Name: String]? { get }
     
     /// The request payload as BaseMappable
-    var requestPayload: BaseMappable? { get }
+    var payload: BaseMappable? { get }
     
     /// The additional request options
     var options: [CURLRequest.Option]? { get }
     
-    /// The mock response result for unit testing
-    var mockResponseResult: APIClientResult<APIClientResponse>? { get }
+    /// The mocked result for tests environment
+    var mockedResult: APIClientResult<APIClientResponse>? { get }
     
     /// Get request URL by concatenating baseURL and current path
     ///

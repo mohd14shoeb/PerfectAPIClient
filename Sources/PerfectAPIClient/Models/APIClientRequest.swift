@@ -49,7 +49,7 @@ public struct APIClientRequest {
             .httpMethod(apiClient.method)
         ]
         // Check if a request payload object is available
-        if let payloadString = apiClient.requestPayload?.toJSONString() {
+        if let payloadString = apiClient.payload?.toJSONString() {
             // Append payload as json encoded string
             options.append(.postString(payloadString))
             // Append HTTP header content type JSON
@@ -70,7 +70,7 @@ public struct APIClientRequest {
             url: apiClient.getRequestURL(),
             method: apiClient.method,
             options: options,
-            payload: apiClient.requestPayload
+            payload: apiClient.payload
         )
     }
     

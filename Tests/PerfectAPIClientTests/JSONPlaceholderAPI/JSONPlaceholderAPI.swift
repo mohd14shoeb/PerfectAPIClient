@@ -49,7 +49,7 @@ extension JSONPlaceholderAPIClient: APIClient {
         return nil
     }
     
-    var requestPayload: BaseMappable? {
+    var payload: BaseMappable? {
         // Check if endpoint is createPost
         if case .createPost(let post) = self {
             // Return post object
@@ -65,7 +65,7 @@ extension JSONPlaceholderAPIClient: APIClient {
         return [.timeout(15)]
     }
     
-    var mockResponseResult: APIClientResult<APIClientResponse>? {
+    var mockedResult: APIClientResult<APIClientResponse>? {
         return nil
     }
     

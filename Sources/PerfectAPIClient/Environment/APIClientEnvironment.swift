@@ -5,28 +5,17 @@
 //  Created by Sven Tiigi on 10.01.18.
 //
 
-/// The APIClientEnvironment Singleton
-/// in order to define custom environment variables
-public class APIClientEnvironment {
-    
-    /// Shared instance
-    public static let shared = APIClientEnvironment()
-    
-    /// The mode
-    public var mode: APIClientEnvironmentMode
-    
-    /// Private initializer
-    private init() {
-        // Set standard mode
-        self.mode = .standard
-    }
-    
-    /// Check if mode is equal to a given mode
-    ///
-    /// - Parameter mode: The mode to check
-    /// - Returns: Boolean if current mode matches with passed mode
-    public func isMode(_ mode: APIClientEnvironmentMode) -> Bool {
-        return self.mode == mode
-    }
-    
+/// The APIClientEnvironment specifies the environment for an APIClient
+///
+/// - `default`: The default environment. Performs real network requests
+/// - tests: The tests environment. Use mockedResponseResult if available
+public enum APIClientEnvironment {
+    /// The default case specifies that the APIClient is running
+    /// in a default environment where no mocked results should be used
+    /// and real network requests should be executed
+    case `default`
+    /// The tests case specifies that the APIClient is running
+    /// under Unit/Integration Tests Environment. If a mockedResponseResult
+    /// is available this mocked result will be used in order to mock the network request
+    case tests
 }

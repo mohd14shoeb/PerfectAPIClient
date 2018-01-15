@@ -13,6 +13,20 @@ import ObjectMapper
 
 public extension APIClient {
     
+    /// The current environment. Default case: .default
+    /// - `default`: The default environment. Performs real network requests
+    /// - tests: The tests environment uses mockedResult if available
+    static var environment: APIClientEnvironment {
+        get {
+            // Return Environment from APIClientEnvironmentManager for APIClient
+            return APIClientEnvironmentManager.shared.get(forAPIClient: self)
+        }
+        set(newValue) {
+            // Set the Environment for the APIClient on APIClientEnvironmentManager
+            APIClientEnvironmentManager.shared.set(newValue, forAPIClient: self)
+        }
+    }
+    
     /// Get request URL by concatenating baseURL and current path
     ///
     /// - Returns: The request URL
@@ -204,7 +218,7 @@ fileprivate extension APIClient {
     func performRequest(_ request: APIClientRequest,
                         requestCompletion: @escaping (APIClientResult<APIClientResponse>) -> Void) {
         // Check if a mockedResponseResult object is available and environment is under unit test conditions
-        if let mockedResponseResult = self.mockResponseResult, APIClientEnvironment.shared.isMode(.test) {
+        if let mockedResponseResult = self.mockedResult, Self.environment == .tests {
             // Invoke requestCompletion with mockedResponseResult
             requestCompletion(mockedResponseResult)
             // Return out of function
