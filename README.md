@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/img/logo.png" width="60%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/readMeAssets/logo.png" width="60%"></p>
 
 <p align="center">
 	<a href="https://developer.apple.com/swift/" target="_blank">
@@ -24,7 +24,7 @@
 
 PerfectAPIClient is a network abstraction layer to perform network requests via [Perfect-CURL](https://github.com/PerfectlySoft/Perfect-CURL) from your [Perfect Server Side Swift](https://github.com/PerfectlySoft/Perfect) application. It's heavily inspired by [Moya](https://github.com/Moya/Moya) and it's easy and fun to use.
 
-<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/img/diagram.png" width="40%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SvenTiigi/PerfectAPIClient/gh-pages/readMeAssets/diagram.png" width="40%"></p>
 
 # Installation
 To integrate using Apple's [Swift Package Manager](https://swift.org/package-manager/), add the following as a dependency to your `Package.swift`:
