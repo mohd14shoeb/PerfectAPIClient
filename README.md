@@ -159,7 +159,7 @@ GithubAPIClient.zen.request { (result: APIClientResult<APIClientResponse>) in
         print(response.url) // The request url
         print(response.status) // The response HTTP status
         print(response.payload) // The response payload
-        print(response.getHTTPHeader(field: "Content-Type")) // HTTP header field
+        print(response.getHTTPHeader(name: .contentType)) // HTTP header field
         print(response.getPayloadJSON) // The payload as JSON/Dictionary
         print(response.getMappablePayload(type: SomethingMappable.self)) // Map payload into an object
         print(response.getMappablePayloadArray(SomethingMappable.self)) // JSON Array
