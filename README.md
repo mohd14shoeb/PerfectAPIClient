@@ -138,7 +138,12 @@ extension GithubAPIClient: APIClient {
         switch self {
         case .zen:
             let request = APIClientRequest(apiClient: self)
-            let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Some zen for you my friend", request: request)
+            let response = APIClientResponse(
+	    	url: self.getRequestURL(), 
+		status: .ok, 
+		payload: "Some zen for you my friend", 
+		request: request
+            )
             return .success(response)
         default:
             return nil
@@ -349,7 +354,12 @@ var mockedResult: APIClientResult<APIClientResponse>? {
     case .zen:
         // This result will be used when unit tests are running
         let request = APIClientRequest(apiClient: self)
-        let response = APIClientResponse(url: self.getRequestURL(), status: .ok, payload: "Keep it logically awesome.", request: request)
+        let response = APIClientResponse(
+		url: self.getRequestURL(), 
+		status: .ok, 
+		payload: "Keep it logically awesome.", 
+		request: request
+	)
         return .success(response)
     case .user:
         // A real network request will be performed when unit tests are running
