@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>APIClientResult Enumeration Reference</title>
+    <title>APIClientEnvironment Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/APIClientResult" class="dashAnchor"></a>
-    <a title="APIClientResult Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Class/APIClientEnvironment" class="dashAnchor"></a>
+    <a title="APIClientEnvironment Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">PerfectAPIClient Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">PerfectAPIClient Reference</a>
         <img id="carat" src="../img/carat.png" />
-        APIClientResult Enumeration Reference
+        APIClientEnvironment Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -77,19 +77,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>APIClientResult</h1>
+            <h1>APIClientEnvironment</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">APIClientResult</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">APIClientEnvironment</span></code></pre>
 
                 </div>
               </div>
-            <p>APIClientResult enumeration represents the result of an APIClient request</p>
-
-<ul>
-<li>success: The success case</li>
-<li>failure: The failure case</li>
-</ul>
+            <p>The APIClientEnvironment Singleton
+in order to define custom environment variables</p>
 
           </section>
           <section class="section task-group-section">
@@ -98,9 +94,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B6ResultO7successACyxGxcAEmlF"></a>
-                    <a name="//apple_ref/swift/Element/success" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B6ResultO7successACyxGxcAEmlF">success</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentC6sharedACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/shared" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentC6sharedACvZ">shared</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -108,30 +104,26 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Success with generic as associated value</p>
+                        <p>Shared instance</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">success</span><span class="p">(</span><span class="kt">Value</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">shared</span> <span class="o">=</span> <span class="nf">APIClientEnvironment</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B6ResultO7failureACyxGAA0B5ErrorOcAEmlF"></a>
-                    <a name="//apple_ref/swift/Element/failure" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B6ResultO7failureACyxGAA0B5ErrorOcAEmlF">failure</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentC4modeAA0bC4ModeOv"></a>
+                    <a name="//apple_ref/swift/Property/mode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentC4modeAA0bC4ModeOv">mode</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -139,30 +131,26 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Failure with error as associated value</p>
+                        <p>The mode</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">failure</span><span class="p">(</span><span class="kt"><a href="../Enums/APIClientError.html">APIClientError</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a></span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16PerfectAPIClient0B6ResultO8analysisyyxcSg7success_yAA0B5ErrorOcSg7failuretF"></a>
-                    <a name="//apple_ref/swift/Method/analysis(success:failure:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16PerfectAPIClient0B6ResultO8analysisyyxcSg7success_yAA0B5ErrorOcSg7failuretF">analysis(success:failure:)</a>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentCACyc33_B13BFD193D490EB23C8DEF1052255F4ALlfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentCACyc33_B13BFD193D490EB23C8DEF1052255F4ALlfc">init()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -170,14 +158,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Perform result analysis with success and failure closure</p>
+                        <p>Private initializer</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">analysis</span><span class="p">(</span><span class="nv">success</span><span class="p">:</span> <span class="p">((</span><span class="kt">Value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?,</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/APIClientError.html">APIClientError</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16PerfectAPIClient0B11EnvironmentC6isModeSbAA0bcE0OF"></a>
+                    <a name="//apple_ref/swift/Method/isMode(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16PerfectAPIClient0B11EnvironmentC6isModeSbAA0bcE0OF">isMode(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Check if mode is equal to a given mode</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isMode</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/APIClientEnvironmentMode.html">APIClientEnvironmentMode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -188,29 +203,21 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>success</em>
+                                <em>mode</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The success closure</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>failure</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The failure closure</p>
+                                  <p>The mode to check</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Boolean if current mode matches with passed mode</p>
                       </div>
                     </section>
                   </div>
