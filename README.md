@@ -17,6 +17,9 @@
 	<a href="https://sventiigi.github.io/PerfectAPIClient" target="_blank">
 		<img src="https://github.com/SvenTiigi/PerfectAPIClient/blob/gh-pages/badge.svg" alt="Docs">
 	</a>
+		<a href="https://github.com/SvenTiigi/PerfectAPIClient/releases" target="_blank">
+		<img src="https://img.shields.io/github/release/SvenTiigi/PerfectAPIClient.svg" alt="Release">
+	</a>
 	<a href="https://twitter.com/SvenTiigi" target="_blank">
 		<img src="https://img.shields.io/badge/Twitter-@SvenTiigi-blue.svg" alt="@SvenTiigi">
 	</a>
